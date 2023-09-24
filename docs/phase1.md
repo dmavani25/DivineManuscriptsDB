@@ -1,5 +1,5 @@
 ## What you learned from the customer
-## The preliminary ER-diagram,
+## Class Diagrams
 ```mermaid
 classDiagram
     class User
@@ -22,7 +22,7 @@ classDiagram
     Book -- CheckOut
     User -- CheckOut
 ```
-
+## The preliminary ER-diagram,
 ## The Data
 ### What is it
 ### In what format
