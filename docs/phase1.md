@@ -19,7 +19,8 @@ classDiagram
     CheckOut : Integer bookId
     CheckOut : Integer userId 
 
-    Book --> CheckOut
+    Book -- CheckOut
+    User -- CheckOut
 ```
 
 ## The Data
