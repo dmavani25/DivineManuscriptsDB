@@ -68,16 +68,98 @@ Yes, we have access to the Excel file that the religion department gave us.
 #### Does it Need cleaning
 Yes, it does need a lot of cleaning.
 
-## Extended goals
-- To use web APIs to find publishers name (and maybe summary as well) of the books being entered and populating them, 
-- This can be done by adding or removing users with Amherst emails through Single Sign On (SSO). 
-- The ADC can manually enter a list of Amherst email addresses into a text box, and the backend will allow them to grant read-only access to a database. 
+## Generating Schema:
+Based on our ER-diagram, the draft of database schema can be roughly outlined as:
+
+```sql
+CREATE TABLE User (
+    userId INTEGER PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    role VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Book (
+    bookId INTEGER PRIMARY KEY,
+    author VARCHAR(255) NOT NULL,
+    Location VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    religion VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE CheckOut (
+    id INTEGER PRIMARY KEY,
+    bookId INTEGER REFERENCES Book(bookId),
+    userId INTEGER REFERENCES User(userId),
+    whenCheckout DATE NOT NULL
+);
+```
+
+## Finalizing Tech Stack:
+
+#### Backend:
+- **Database**: PostgreSQL (as mentioned).
+- **Server**: Linux server.
+- **Backend Framework**: Flask or Django (Python) would be suitable for this. Flask is lightweight and easier to set up, while Django is more robust and comes with an admin interface out of the box.
+
+#### Frontend:
+- **Framework/Library**: React.js or Vue.js. React.js is widely used and has a large community, while Vue.js is easier to pick up for beginners.
+- **UI Library**: Material-UI (for React) or Vuetify (for Vue) to speed up the development process with pre-built UI components.
+
+#### API for Publisher:
+As you don't know which web API to use for publishers, you might want to consider Google Books API or Open Library API. These APIs can provide book details based on ISBN or title.
+
+## Data Cleaning:
+
+- Load the Excel sheets into a tool like Pandas in Python.
+- Examine data for missing values, duplicates, or inconsistent formats.
+- Handle any outliers or errors in the data.
+- Normalize the data (e.g., ensuring consistent casing, date formats, etc.).
+
+## Development:
+
+#### Backend:
+- Set up the database and schema.
+- Create API endpoints for CRUD operations on books, users, and checkout logs.
+- Implement filtering functionality.
+- Add authentication and authorization to ensure only admins can add/delete and everyone else has read-only access.
+  
+#### Frontend:
+- Create a dashboard UI for viewing books, users, and checkout logs.
+- Implement filtering functionality on the UI.
+- Add interfaces for adding/deleting books and users.
+- Create UI components to handle book lending and returning.
+  
+## Extended Goals:
+- Integrate with the chosen publisher API to fetch book details.
+- Add Single Sign-On (SSO) functionality using Amherst emails.
+- Allow the ADC to input a list of emails to grant access.
+
+## Testing:
+
+- Test CRUD operations.
+- Test filtering functionality.
+- Test user roles (admin vs regular user).
+- Test the extended goals' features.
+
+## Deployment:
+
+- Deploy the backend on the Linux server.
+- Deploy the frontend on a suitable hosting provider or the same server.
+
+## Documentation & Handover:
+
+- Document the system, including API endpoints, database schema, and any other relevant details.
+- Provide training or a walkthrough to ADC or any other relevant stakeholders.
 
 ## What don't we know
 - Web API for Publisher
 - The needed UI and UX design
 - The Tech Stack to be used for specifics (except Linux server and PostgreSQL, which will be provided by the professor)
   
-## Next steps.
-- Generating schema.
-- Finalizing tech stack.
+## Next Steps:
+
+1. Confirm the tech stack with stakeholders.
+2. Start the data cleaning process.
+3. Initiate the development process, beginning with the backend.
+4. Regularly test and iterate based on feedback.
+5. Once stable, deploy and document the system.
