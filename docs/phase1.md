@@ -12,6 +12,7 @@ classDiagram
     Book : String author
     Book : String Location 
     Book : String name
+    Book : String religion
 
     class CheckOut
     CheckOut : Integer id
