@@ -57,23 +57,27 @@ erDiagram
 ```
 ## The Data
 We received the data in the form of Excel sheets. It contained various sheets with different subsets of information from all the attributes. The data will definitely need cleaning.
-### What is it
+#### What is it
 The data is about the religious books stored by the religion department. Each book already has a name, author, topic, Bookcase, and shelf number where it is stored.
-### In what format
-We were given an Excel file with many sheets divided by subject.
-### How much data
+#### In what format
+We were given an Excel file with many sheets divided by religion that the books are each associated to.
+#### How much data
 We have around 600 books.
-### Do we have access
+#### Do we have access
 Yes, we have access to the Excel file that the religion department gave us.
-### Does it Need cleaning
-Yes, it does need a lot of cleaning
+#### Does it Need cleaning
+Yes, it does need a lot of cleaning.
+
 ## Extended goals
 - To use web APIs to find publishers name (and maybe summary as well) of the books being entered and populating them, 
 - This can be done by adding or removing users with Amherst emails through Single Sign On (SSO). 
 - The ADC can manually enter a list of Amherst email addresses into a text box, and the backend will allow them to grant read-only access to a database. 
 
 ## What don't we know
-- 
+- Web API for Publisher
+- The needed UI and UX design
+- The Tech Stack to be used for specifics (except Linux server and PostgreSQL, which will be provided by the professor)
+  
 ## Next steps.
 - Generating schema.
 - Finalizing tech stack.
