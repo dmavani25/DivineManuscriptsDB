@@ -5,7 +5,7 @@ classDiagram
     class User
     User : Integer userId
     User : String email
-    User : String designation
+    User : String role
 
     class Book
     Book : Integer bookId
@@ -18,6 +18,7 @@ classDiagram
     CheckOut : Integer id
     CheckOut : Integer bookId
     CheckOut : Integer userId 
+    Checkout : Date whenCheckout
 
     Book -- CheckOut
     User -- CheckOut
