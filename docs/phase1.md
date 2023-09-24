@@ -13,12 +13,11 @@ classDiagram
     Book : String Location 
     Book : String name
 
-
     class CheckOut
     CheckOut : Integer id
     CheckOut : Integer bookId
     CheckOut : Integer userId 
-    Checkout : Date whenCheckout
+    CheckOut : Date whenCheckout
 
     Book -- CheckOut
     User -- CheckOut
