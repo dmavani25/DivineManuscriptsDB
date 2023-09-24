@@ -1,5 +1,27 @@
 ## What you learned from the customer
 ## The preliminary ER-diagram,
+```mermaid
+classDiagram
+    class User
+    User : Integer userId
+    User : String email
+    User : String designation
+
+    class Book
+    Book : Integer bookId
+    Book : String author
+    Book : String Location 
+    Book : String name
+
+
+    class CheckOut
+    CheckOut : Integer id
+    CheckOut : Integer bookId
+    CheckOut : Integer userId 
+
+    Book --> CheckOut
+```
+
 ## The Data
 ### What is it
 ### In what format
