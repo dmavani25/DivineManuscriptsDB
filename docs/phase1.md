@@ -34,13 +34,13 @@ classDiagram
 ## The preliminary ER-diagram,
 ```mermaid
 erDiagram
-    User ||--o{ CheckOut : "Checked Out By"
+    User ||--o{ CheckOut : "Checked Out"
     User {
         Integer userId
         String email
         String role
     }
-    CheckOut ||--|{ Book : "Checked Out Book"
+    CheckOut ||--|{ Book : "from"
     CheckOut {
         Integer id
         Integer bookId
