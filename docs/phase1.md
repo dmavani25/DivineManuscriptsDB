@@ -103,7 +103,7 @@ CREATE TABLE CheckOut (
 
 #### Frontend:
 - **Framework/Library**: React.js or Vue.js. React.js is widely used and has a large community, while Vue.js is easier to pick up for beginners.
-- **UI Library**: MantineUI, TailwindCSS Material-UI (for React) or Vuetify (for Vue) to speed up the development process with pre-built UI components.
+- **UI Library**: MantineUI, TailwindCSS, Material-UI (for React) or Vuetify (for Vue) to speed up the development process with pre-built UI components.
 
 #### API for Publisher:
 As we don't know which web API to use for publishers, we might want to consider Google Books API or Open Library API. These APIs can provide book details based on ISBN or title.
