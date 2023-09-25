@@ -106,10 +106,9 @@ CREATE TABLE CheckOut (
 - **UI Library**: Material-UI (for React) or Vuetify (for Vue) to speed up the development process with pre-built UI components.
 
 #### API for Publisher:
-As you don't know which web API to use for publishers, you might want to consider Google Books API or Open Library API. These APIs can provide book details based on ISBN or title.
+As we don't know which web API to use for publishers, we might want to consider Google Books API or Open Library API. These APIs can provide book details based on ISBN or title.
 
 ## Data Cleaning:
-
 - Load the Excel sheets into a tool like Pandas in Python.
 - Examine data for missing values, duplicates, or inconsistent formats.
 - Handle any outliers or errors in the data.
@@ -135,19 +134,16 @@ As you don't know which web API to use for publishers, you might want to conside
 - Allow the ADC to input a list of emails to grant access.
 
 ## Testing:
-
 - Test CRUD operations.
 - Test filtering functionality.
 - Test user roles (admin vs regular user).
 - Test the extended goals' features.
 
 ## Deployment:
-
 - Deploy the backend on the Linux server.
 - Deploy the frontend on a suitable hosting provider or the same server.
 
 ## Documentation & Handover:
-
 - Document the system, including API endpoints, database schema, and any other relevant details.
 - Provide training or a walkthrough to ADC or any other relevant stakeholders.
 
@@ -157,8 +153,7 @@ As you don't know which web API to use for publishers, you might want to conside
 - The Tech Stack to be used for specifics (except Linux server and PostgreSQL, which will be provided by the professor)
   
 ## Next Steps:
-
-1. Confirm the tech stack with stakeholders.
+1. Confirm the tech stack.
 2. Start the data cleaning process.
 3. Initiate the development process, beginning with the backend.
 4. Regularly test and iterate based on feedback.
