@@ -135,6 +135,7 @@ As we don't know which web API to use for publishers, we might want to consider 
 
 ## Testing:
 - Test CRUD operations.
+- Implement unit tests
 - Test filtering functionality.
 - Test user roles (admin vs regular user).
 - Test the extended goals' features.
