@@ -98,7 +98,7 @@ CREATE TABLE CheckOut (
 
 #### Backend:
 - **Database**: PostgreSQL (as mentioned).
-- **Server**: Linux server.
+- **Server**:  Linux server.
 - **Backend Framework**: Flask or Django (Python) would be suitable for this. Flask is lightweight and easier to set up, while Django is more robust and comes with an admin interface out of the box.
 
 #### Frontend:
