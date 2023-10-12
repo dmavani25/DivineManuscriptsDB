@@ -8,6 +8,7 @@
 - For now, we don't want students to access it because in the past they found the books, took them and never returned, so this needs to be serving ADC (our customer) as admin
 
 ## The Revised ER-diagram,
+TO BE UPDATED SOON :)
 ```mermaid
 erDiagram
     User ||--o{ CheckOut : "Checked Out"
