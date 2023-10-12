@@ -69,7 +69,7 @@ CREATE TABLE Location (
 ## Finalizing Tech Stack:
 
 #### Backend:
-- **Database**: PostgreSQL (as mentioned).
+- **Database**: PostgreSQL (as mentioned, and installed).
 - **Server**:  Linux server.
 - **Backend Framework**: NextJS, Flask or Django (Python) would be suitable for this. Flask is lightweight and easier to set up, while Django is more robust and comes with an admin interface out of the box.
 
@@ -78,7 +78,7 @@ CREATE TABLE Location (
 - **UI Library**: MantineUI, TailwindCSS, Material-UI (for React) or Vuetify (for Vue) to speed up the development process with pre-built UI components.
 
 #### API for Publisher:
-As we don't know which web API to use for publishers, we might want to consider Google Books API or Open Library API. These APIs can provide book details based on ISBN or title.
+- Google Books API / Open Library API. These APIs can provide book details based on ISBN or title.
 
 ## Data Cleaning:
 - Load the Excel sheets into a tool like Pandas in Python.
@@ -89,7 +89,7 @@ As we don't know which web API to use for publishers, we might want to consider 
 ## Development:
 
 #### Backend:
-- Set up the database and schema.
+- [DONE] Set up the database and schema.
 - Create API endpoints for CRUD operations on books, users, and checkout logs.
 - Implement filtering functionality.
 - Add authentication and authorization to ensure only admins can add/delete and everyone else has read-only access.
@@ -119,15 +119,9 @@ As we don't know which web API to use for publishers, we might want to consider 
 ## Documentation & Handover:
 - Document the system, including API endpoints, database schema, and any other relevant details.
 - Provide training or a walkthrough to ADC or any other relevant stakeholders.
-
-## What don't we know
-- Web API for Publisher
-- The needed UI and UX design
-- The Tech Stack to be used for specifics (except Linux server and PostgreSQL, which will be provided by the professor)
   
 ## Next Steps:
-1. Confirm the tech stack.
-2. Start the data cleaning process.
-3. Initiate the development process, beginning with the backend.
-4. Regularly test and iterate based on feedback.
-5. Once stable, deploy and document the system.
+1. Start the data cleaning process.
+2. Initiate the development process, beginning with the backend and frontend simultaneously.
+3. Regularly test and iterate based on feedback.
+4. Once stable, deploy and document the system.
