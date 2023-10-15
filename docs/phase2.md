@@ -11,26 +11,40 @@
 TO BE UPDATED SOON :)
 ```mermaid
 erDiagram
-    User ||--o{ CheckOut : "Checked Out"
+    User ||..|| Checkings : "checks out"
+    Checkings ||--o{ Book : "is checked out"
+    Book ||--|| Location : "has"
+    
     User {
-        Integer userId
-        String email
-        String role
+        email email
+        role VARCHAR
+        name VARCHAR
     }
-    CheckOut ||--|{ Book : "from"
-    CheckOut {
-        Integer id
-        Integer bookId
-        Integer userId
-        Date whenCheckout
-    }
+
     Book {
-        Integer bookId
-        String author
-        String Location
-        String name
-        String religion
+        bookName VARCHAR
+        authorName VARCHAR
+        religion VARCHAR
+        numCopies INTEGER
+        checkedOutCopies INTEGER
     }
+
+    Checkings {
+        checkingsId INTEGER
+        checkedOutSince VARCHAR
+        userEmail VARCHAR
+        bookName VARCHAR
+        authorName VARCHAR
+    }
+
+    Location {
+        locationId INTEGER
+        wing VARCHAR
+        shelf VARCHAR
+        bookName VARCHAR
+        authorName VARCHAR
+    }
+
 ```
 ## The Data
 We received the data in the form of Excel sheets. It contained various sheets with different subsets of information from all the attributes. The data will definitely need cleaning. The data is about the religious books stored by the religion department. Each book already has a name, author, topic, Bookcase, and shelf number where it is stored. We have around 600 books.
@@ -74,7 +88,8 @@ CREATE TABLE Location (
     shelf VARCHAR(25) NOT NULL,
     bookName VARCHAR(255) NOT NULL,
     authorName VARCHAR(255) NOT NULL,
-    FOREIGN KEY (bookName, authorName) REFERENCES Book(bookName, authorName)
+    FOREIGN KEY (bookName, authorName) REFERENCES Book(bookName, authorName),
+    UNIQUE (bookName, authorName)  -- Enforce the one-to-one relationship
 );
 
 ```
