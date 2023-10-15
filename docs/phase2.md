@@ -36,35 +36,47 @@ erDiagram
 We received the data in the form of Excel sheets. It contained various sheets with different subsets of information from all the attributes. The data will definitely need cleaning. The data is about the religious books stored by the religion department. Each book already has a name, author, topic, Bookcase, and shelf number where it is stored. We have around 600 books.
 
 ## Generating ER Schema:
-Based on our ER-diagram, the draft of database schema can be roughly outlined as:
+Based on our ER-diagram, the draft of database schema can be roughly outlined as: (Please note that "--" is a comment in SQL, which is not executed)
 
 ```sql
+-- User Table
 CREATE TABLE User (
-    userId INTEGER PRIMARY KEY,
-    email VARCHAR(255) UNIQUE NOT NULL,
+    email VARCHAR(255) PRIMARY KEY,
     role VARCHAR(50) NOT NULL,
     name VARCHAR(150) NOT NULL
 );
 
+-- Book Table with composite primary key
 CREATE TABLE Book (
-    bookId INTEGER PRIMARY KEY,
     bookName VARCHAR(255) NOT NULL,
     authorName VARCHAR(255) NOT NULL,
     religion VARCHAR(50) NOT NULL,
     numCopies INTEGER NOT NULL,
-    checkedOutCopies INTEGER NOT NULL
+    checkedOutCopies INTEGER NOT NULL,
+    PRIMARY KEY (bookName, authorName)
 );
 
+-- Checkings Table
 CREATE TABLE Checkings (
     checkingsId INTEGER PRIMARY KEY,
-    checkedOutSince VARCHAR(255)
+    checkedOutSince VARCHAR(255),
+    userEmail VARCHAR(255) NOT NULL,
+    bookName VARCHAR(255) NOT NULL,
+    authorName VARCHAR(255) NOT NULL,
+    FOREIGN KEY (userEmail) REFERENCES User(email),
+    FOREIGN KEY (bookName, authorName) REFERENCES Book(bookName, authorName)
 );
 
+-- Location Table
 CREATE TABLE Location (
     locationId INTEGER PRIMARY KEY,
     wing VARCHAR(100) NOT NULL,
-    shelf VARCHAR(25) NOT NULL
+    shelf VARCHAR(25) NOT NULL,
+    bookName VARCHAR(255) NOT NULL,
+    authorName VARCHAR(255) NOT NULL,
+    FOREIGN KEY (bookName, authorName) REFERENCES Book(bookName, authorName)
 );
+
 ```
 
 ## Finalizing Tech Stack:
