@@ -105,11 +105,11 @@ CREATE TABLE Location (
 #### Backend:
 - **Database**: PostgreSQL (as mentioned, and installed).
 - **Server**:  Linux server.
-- **Backend Framework**: NextJS, Flask or Django (Python) would be suitable for this. Flask is lightweight and easier to set up, while Django is more robust and comes with an admin interface out of the box.
+- **Backend Framework**: NextJS.
 
 #### Frontend:
-- **Framework/Library**: React.js or Vue.js. React.js is widely used and has a large community, while Vue.js is easier to pick up for beginners.
-- **UI Library**: MantineUI, TailwindCSS, Material-UI (for React) or Vuetify (for Vue) to speed up the development process with pre-built UI components.
+- **Framework/Library**: React.js, Nx.dev
+- **UI Library**: TailwindCSS, Material-UI (for React). This is to speed up the development process with pre-built UI components.
 
 #### API for Publisher:
 - Google Books API / Open Library API. These APIs can provide book details based on ISBN or title.
@@ -131,7 +131,7 @@ CREATE TABLE Location (
 #### Frontend:
 - Create a dashboard UI for viewing books, users, and checkout logs.
 - Implement filtering functionality on the UI.
-- Add interfaces for adding/deleting books and users.
+- Add interfaces with the database for adding/deleting books and users.
 - Create UI components to handle book lending and returning.
   
 ## Extended Goals:
@@ -153,7 +153,15 @@ CREATE TABLE Location (
 ## Documentation & Handover:
 - Document the system, including API endpoints, database schema, and any other relevant details.
 - Provide training or a walkthrough to ADC or any other relevant stakeholders.
-  
+
+## Roles:
+- We decided on a flat structure since we all share similar backgrounds. For now, we will all work as _Full-Stack_ developers with unique tasks.
+
+## Open Questions:
+- How to deal with copies of the same book being checked out to the same user?
+- How to clean the data most efficiently?
+- The best way to structure the team?
+
 ## Next Steps:
 1. Start the data cleaning process.
 2. Initiate the development process, beginning with the backend and frontend simultaneously.
