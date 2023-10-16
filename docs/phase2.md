@@ -30,7 +30,6 @@ erDiagram
     }
 
     Checkings {
-        checkingsId INTEGER
         checkedOutSince VARCHAR
         userEmail VARCHAR
         bookName VARCHAR
@@ -48,6 +47,9 @@ erDiagram
 ```
 ## The Data
 We received the data in the form of Excel sheets. It contained various sheets with different subsets of information from all the attributes. The data will definitely need cleaning. The data is about the religious books stored by the religion department. Each book already has a name, author, topic, Bookcase, and shelf number where it is stored. We have around 600 books.
+
+### Data restrictions:
+- User can't check out multiple copies of the same book simulteanously
 
 ## Generating ER Schema:
 Based on our ER-diagram, the draft of database schema can be roughly outlined as: (Please note that "--" is a comment in SQL, which is not executed)
@@ -72,7 +74,6 @@ CREATE TABLE Book (
 
 -- Checkings Table
 CREATE TABLE Checkings (
-    checkingsId INTEGER PRIMARY KEY,
     checkedOutSince VARCHAR(255),
     userEmail VARCHAR(255) NOT NULL,
     bookName VARCHAR(255) NOT NULL,
@@ -93,6 +94,11 @@ CREATE TABLE Location (
 );
 
 ```
+
+
+
+
+
 
 ## Finalizing Tech Stack:
 
