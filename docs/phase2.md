@@ -11,8 +11,8 @@
 TO BE UPDATED SOON :)
 ```mermaid
 erDiagram
-    User ||..|| Checkings : "checks out"
-    Checkings ||--o{ Book : "is checked out"
+    User ||--|{ Checkings : "checks out"
+    Checkings }|--|| Book : "is checked out"
     Book ||--|| Location : "has"
     
     User {
