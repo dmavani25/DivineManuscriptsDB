@@ -8,7 +8,7 @@
 - For now, we don't want students to access it because in the past they found the books, took them and never returned, so this needs to be serving ADC (our customer) as admin
 
 ## The Revised ER-diagram,
-TO BE UPDATED SOON :)
+
 ```mermaid
 erDiagram
     User ||--|{ Checkings : "checks out"
@@ -18,7 +18,6 @@ erDiagram
     User {
         email email
         role VARCHAR
-        name VARCHAR
     }
 
     Book {
@@ -58,8 +57,7 @@ Based on our ER-diagram, the draft of database schema can be roughly outlined as
 -- User Table
 CREATE TABLE User (
     email VARCHAR(255) PRIMARY KEY,
-    role VARCHAR(50) NOT NULL,
-    name VARCHAR(150) NOT NULL
+    role VARCHAR(50) NOT NULL
 );
 
 -- Book Table with composite primary key
