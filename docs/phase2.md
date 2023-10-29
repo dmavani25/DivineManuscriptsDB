@@ -1,5 +1,3 @@
-# Religion Database Project (Ahmed, Ahsan, Brandon, Dhyey)
-
 ## What we learned from the customer
 - The customer requires a database such that we will have all the information related to the religion library and the available books in an organized and easily accessible manner.
 - We are planning to implement the following features:
