@@ -1,0 +1,10 @@
+[{"bookName":"A","authorName":"Auth-1","religion":"World Religion","numCopies":3,"checkedOutCopies":1},
+{"bookName":"B","authorName":"Auth-1","religion":"Christianity","numCopies":7,"checkedOutCopies":1},
+{"bookName":"C","authorName":"Auth-2","religion":"Islam","numCopies":2,"checkedOutCopies":1},
+{"bookName":"D","authorName":"Auth-3","religion":"World Religion","numCopies":8,"checkedOutCopies":2},
+{"bookName":"E","authorName":"Auth-4","religion":"Christianity","numCopies":10,"checkedOutCopies":1},
+{"bookName":"F","authorName":"Auth-4","religion":"World Religion + Theology","numCopies":4,"checkedOutCopies":1},
+{"bookName":"G","authorName":"Auth-5","religion":"Islam","numCopies":6,"checkedOutCopies":1},
+{"bookName":"H","authorName":"Auth-6","religion":"Islam","numCopies":1,"checkedOutCopies":1},
+{"bookName":"I","authorName":"Auth-1","religion":"Hinduism","numCopies":7,"checkedOutCopies":0},
+{"bookName":"C","authorName":"Auth-9","religion":"Christianity","numCopies":3,"checkedOutCopies":0}]

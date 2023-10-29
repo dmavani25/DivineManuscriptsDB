@@ -1,0 +1,11 @@
+bookName,authorName,religion,numCopies,checkedOutCopies
+A,Auth-1,World Religion,3,1
+B,Auth-1,Christianity,7,1
+C,Auth-2,Islam,2,1
+D,Auth-3,World Religion,8,2
+E,Auth-4,Christianity,10,1
+F,Auth-4,World Religion + Theology,4,1
+G,Auth-5,Islam,6,1
+H,Auth-6,Islam,1,1
+I,Auth-1,Hinduism,7,0
+C,Auth-9,Christianity,3,0
