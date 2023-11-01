@@ -7,6 +7,12 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import BtnCellRenderer from './BtnCellRenderer';
+// import ChildMessageRenderer from './ChildMessageRenderer';
+
+
+const methodFromParent = (cell : any) => {
+  alert('<Parent Component Method from ' + cell + '!>');
+};
 
 function BookPage() {
   const gridRef = useRef<any>(null);
@@ -39,11 +45,6 @@ function BookPage() {
       headerName: 'Actions',
       field: 'availableActions',
       cellRenderer: BtnCellRenderer,
-      cellRendererParams: {
-        clicked: function (field: any) {
-          alert(`${field} was clicked`);
-        },
-      },
     },
   ];
 
@@ -81,9 +82,13 @@ function BookPage() {
         style={{ height: '600px', width: '1000px' }}
       >
         <AgGridReact
+          getRowId={(params) => params.data.row}
           ref={gridRef}
           rowData={rowData}
           columnDefs={columnDefs}
+          context={{
+            methodFromParent,
+          }}
         ></AgGridReact>
       </div>
     </div>
