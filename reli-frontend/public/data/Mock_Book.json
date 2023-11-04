@@ -1,0 +1,84 @@
+{
+    "rows": [
+      {
+        "bookName": "A",
+        "authorName": "Auth-1",
+        "religion": "World Religion",
+        "numCopies": 3,
+        "checkedOutCopies": 1,
+        "availableActions": "checkout"
+      },
+      {
+        "bookName": "B",
+        "authorName": "Auth-1",
+        "religion": "Christianity",
+        "numCopies": 7,
+        "checkedOutCopies": 1,
+        "availableActions": "checkout"
+      },
+      {
+        "bookName": "C",
+        "authorName": "Auth-2",
+        "religion": "Islam",
+        "numCopies": 2,
+        "checkedOutCopies": 1,
+        "availableActions": "checkout"
+      },
+      {
+        "bookName": "D",
+        "authorName": "Auth-3",
+        "religion": "World Religion",
+        "numCopies": 8,
+        "checkedOutCopies": 2,
+        "availableActions": "checkout"
+      },
+      {
+        "bookName": "E",
+        "authorName": "Auth-4",
+        "religion": "Christianity",
+        "numCopies": 10,
+        "checkedOutCopies": 1,
+        "availableActions": "checkout"
+      },
+      {
+        "bookName": "F",
+        "authorName": "Auth-4",
+        "religion": "World Religion + Theology",
+        "numCopies": 4,
+        "checkedOutCopies": 1,
+        "availableActions": "checkout"
+      },
+      {
+        "bookName": "G",
+        "authorName": "Auth-5",
+        "religion": "Islam",
+        "numCopies": 6,
+        "checkedOutCopies": 1,
+        "availableActions": "checkout"
+      },
+      {
+        "bookName": "H",
+        "authorName": "Auth-6",
+        "religion": "Islam",
+        "numCopies": 1,
+        "checkedOutCopies": 1,
+        "availableActions": "checkout"
+      },
+      {
+        "bookName": "I",
+        "authorName": "Auth-1",
+        "religion": "Hinduism",
+        "numCopies": 7,
+        "checkedOutCopies": 0,
+        "availableActions": "checkout"
+      },
+      {
+        "bookName": "C",
+        "authorName": "Auth-9",
+        "religion": "Christianity",
+        "numCopies": 3,
+        "checkedOutCopies": 0,
+        "availableActions": "checkout"
+      }
+    ]
+  }
