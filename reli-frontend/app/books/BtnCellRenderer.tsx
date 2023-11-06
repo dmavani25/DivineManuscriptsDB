@@ -2,7 +2,7 @@
 function BtnCellRenderer(props : any) {
   const invokeParentMethod = () => {
     console.log(`${Object.keys(props.node)}`)
-    props.context.methodFromParent(
+    props.context.showModal(
       `Row: ${props.node.rowIndex}`
     );
   };

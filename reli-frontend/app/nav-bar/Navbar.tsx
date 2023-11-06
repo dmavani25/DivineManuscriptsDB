@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Navbar = () => {
+function Navbar() {
   return (
     <nav className="z-50 shadow-md fixed top-0 w-full">
       <div className="p-0.5 bg-primary"></div>
       <div className="p-3 flex justify-between items-center">
-        <div className="text-xl text-primary font-bold">
+        <div className="text-2xl text-primary font-bold">
           Divine Manuscripts Db
         </div>
 
@@ -19,5 +19,6 @@ const Navbar = () => {
     </nav>
   );
 };
+
 
 export default Navbar;

@@ -8,11 +8,17 @@ import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import BtnCellRenderer from './BtnCellRenderer';
 import Navbar from 'app/nav-bar/Navbar';
+import Modal from 'app/custom-components/modal/ModalComponent';
+import ModalPopUpCellRenderer from 'app/custom-components/modal/ModalPopUpCellRenderer';
 // import ChildMessageRenderer from './ChildMessageRenderer';
 
-const methodFromParent = (cell: String) => {
-  alert('<Parent Component Method from ' + cell + '!>');
-};
+const modalProperties : ModalPropsDef = {
+  showModal : true,
+  dialogueText : "Clicked on",
+  okButton : "OK",
+  cancelButton : "Cancel"
+
+}
 
 function BookPage() {
   const gridRef = useRef<any>(null);
@@ -56,7 +62,7 @@ function BookPage() {
     {
       headerName: 'Actions',
       field: 'availableActions',
-      cellRenderer: BtnCellRenderer,
+      cellRenderer: ModalPopUpCellRenderer,
     },
   ];
 
@@ -87,13 +93,19 @@ function BookPage() {
       });
   }, []);
 
+  const gridOptions = {
+    suppressCellFocus : true,
+    pagination : true,
+    rowHeight : 60
+  }
+
   return (
     <div>
       <Navbar/>
       <div className="w-full">
         <div className="mt-24 w-3/4 mx-auto">
           <div className="flex justify-between">
-            <div className="text-lg text-primary p-1 font-bold">
+            <div className="text-2lg text-primary p-1 font-bold">
               Available Books
             </div>
             <div className="flex items-center justify-center">
@@ -109,17 +121,17 @@ function BookPage() {
         </div>
         <div
           className="m-2 mx-auto ag-theme-alpine min-w-fit"
-          style={{ height: '700px', width: '1200px' }}
+          style={{ height: '700px', width: '80%' }}
         >
           <AgGridReact
             ref={gridRef}
             rowData={rowData}
             columnDefs={columnDefs}
-            context={{
-              methodFromParent,
-            }}
             defaultColDef={defaultColumnDefs}
-            pagination={true}
+            context={{
+              modalProps : modalProperties,
+            }}
+            gridOptions={gridOptions}
           ></AgGridReact>
         </div>
 
