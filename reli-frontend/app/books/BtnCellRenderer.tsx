@@ -1,11 +1,9 @@
-"use client"
-import { useState } from "react";
-
 
 function BtnCellRenderer(props : any) {
   const invokeParentMethod = () => {
+    console.log(`${Object.keys(props.node)}`)
     props.context.methodFromParent(
-      `Row: ${props.node.rowIndex}, Col: ${props.colDef.field}`
+      `Row: ${props.node.rowIndex}`
     );
   };
 

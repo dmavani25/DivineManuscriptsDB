@@ -7,10 +7,10 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import BtnCellRenderer from './BtnCellRenderer';
+import Navbar from 'app/nav-bar/Navbar';
 // import ChildMessageRenderer from './ChildMessageRenderer';
 
-
-const methodFromParent = (cell : any) => {
+const methodFromParent = (cell: String) => {
   alert('<Parent Component Method from ' + cell + '!>');
 };
 
@@ -36,17 +36,38 @@ function BookPage() {
       filter: 'agTextColumnFilter',
     },
     {
-      headerName: 'Number of Copies',
+      headerName: 'Num Copies',
       field: 'numCopies',
       filter: 'agNumberColumnFilter',
     },
     { headerName: 'Religion', field: 'religion', filter: 'agTextColumnFilter' },
+    {
+      headerName : 'Shelf',
+      field : 'shelf',
+      filter: 'agNumberColumnFilter',
+    },
+    {
+      headerName : 'Wing',
+      field : 'wing',
+      filter: 'agTextColumnFilter',
+
+
+    },
     {
       headerName: 'Actions',
       field: 'availableActions',
       cellRenderer: BtnCellRenderer,
     },
   ];
+
+  const defaultColumnDefs = {
+    sortable: true,
+    filter: true,
+    resizable: true,
+    flex: 1,
+    minWidth: 100,
+    cellClass: 'px-4 py-2 cell-wrap-text', // Apply Tailwind CSS classes to grid cells
+  };
 
   const [columnDefs] = useState(colDefs);
 
@@ -67,29 +88,41 @@ function BookPage() {
   }, []);
 
   return (
-    <div className="h-screen flex flex-col items-center justify-center ">
-      <div className="p-3 ">
-        <input
-          className="shadow appearance-none border border-1 rounded-md w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-          type="text"
-          id="filter-text-box"
-          placeholder="Search..."
-          onInput={onFilterTextBoxChanged}
-        />
-      </div>
-      <div
-        className="ag-theme-alpine min-w-fit"
-        style={{ height: '600px', width: '1000px' }}
-      >
-        <AgGridReact
-          getRowId={(params) => params.data.row}
-          ref={gridRef}
-          rowData={rowData}
-          columnDefs={columnDefs}
-          context={{
-            methodFromParent,
-          }}
-        ></AgGridReact>
+    <div>
+      <Navbar/>
+      <div className="w-full">
+        <div className="mt-24 w-3/4 mx-auto">
+          <div className="flex justify-between">
+            <div className="text-lg text-primary p-1 font-bold">
+              Available Books
+            </div>
+            <div className="flex items-center justify-center">
+              <input
+                type="text"
+                placeholder="Search..."
+                id="filter-text-box"
+                onInput={onFilterTextBoxChanged}
+                className="shadow appearance border border-primary rounded p-1 focus:outline-none focus:shadow-outline"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className="m-2 mx-auto ag-theme-alpine min-w-fit"
+          style={{ height: '700px', width: '1200px' }}
+        >
+          <AgGridReact
+            ref={gridRef}
+            rowData={rowData}
+            columnDefs={columnDefs}
+            context={{
+              methodFromParent,
+            }}
+            defaultColDef={defaultColumnDefs}
+            pagination={true}
+          ></AgGridReact>
+        </div>
+
       </div>
     </div>
   );
