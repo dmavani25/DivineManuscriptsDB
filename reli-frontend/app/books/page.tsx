@@ -174,7 +174,7 @@ function BookPage() {
       <Navbar />
       {modalComponent()}
       <div className="w-full">
-        <div className="mt-24 w-3/4 mx-auto">
+        <div className="mt-24 w-3/5 mx-auto">
           <div className="flex justify-between">
             <div className="text-2lg text-primary p-1 font-bold">
               Available Books
