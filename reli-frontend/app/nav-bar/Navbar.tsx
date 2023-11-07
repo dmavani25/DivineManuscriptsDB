@@ -6,7 +6,7 @@ function Navbar() {
       <div className="p-0.5 bg-primary"></div>
       <div className="p-3 flex justify-between items-center">
         <div className="text-2xl text-primary font-bold">
-          Divine Manuscripts Db
+          Divine Manuscripts
         </div>
 
         <div className="p-4 flex justify-between items-center">
