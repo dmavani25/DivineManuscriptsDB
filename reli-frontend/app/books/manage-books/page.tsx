@@ -30,11 +30,11 @@ function ManageBooksPage() {
         const newVal = params.newValue;
         const valueChanged = params.data.bookName !== newVal;
         if (valueChanged) {
-            console.log("Value changed " + newVal)
+          console.log('Value changed ' + newVal);
           params.data.bookName = newVal;
         }
         return valueChanged;
-    }
+      },
     },
     {
       headerName: 'Author Name',
@@ -45,35 +45,35 @@ function ManageBooksPage() {
         const newVal = params.newValue;
         const valueChanged = params.data.authorName !== newVal;
         if (valueChanged) {
-            console.log("Value changed " + newVal)
+          console.log('Value changed ' + newVal);
           params.data.authorName = newVal;
         }
         return valueChanged;
-    }
+      },
     },
     {
       headerName: 'Num Copies',
       field: 'numCopies',
       filter: 'agNumberColumnFilter',
-      editable: true
+      editable: true,
     },
-    { headerName: 'Religion', field: 'religion', filter: 'agTextColumnFilter' , editable: true},
+    {
+      headerName: 'Religion',
+      field: 'religion',
+      filter: 'agTextColumnFilter',
+      editable: true,
+    },
     {
       headerName: 'Wing',
       field: 'wing',
       filter: 'agTextColumnFilter',
-      editable: true
+      editable: true,
     },
     {
       headerName: 'Shelf',
       field: 'shelf',
       filter: 'agNumberColumnFilter',
-      editable: true
-    },
-    {
-      headerName: 'Actions',
-      field: 'availableActions',
-      cellRenderer: ModalPopUpCellRenderer,
+      editable: true,
     },
   ];
 
@@ -197,7 +197,7 @@ function ManageBooksPage() {
       <Navbar />
       {modalComponent()}
       <div className="w-full">
-        <div className="mt-24 w-3/4 mx-auto">
+        <div className="mt-24 w-3/5 mx-auto">
           <div className="flex justify-between">
             <div className="text-2lg text-primary p-1 font-bold">
               Book Records
@@ -210,28 +210,18 @@ function ManageBooksPage() {
                 onInput={onFilterTextBoxChanged}
                 className="shadow appearance border border-primary rounded p-1 focus:outline-none focus:shadow-outline"
               />
-
-              <div>
-                <button
-                  className="mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold uppercase text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
-                  type="button"
-                >
-                  <i className="fas fa-heart"></i> Add New Book
-                </button>
-
-                <button
-                  className="text-[#cc5833] bg-transparent border border-solid border-[#cc5833] hover:bg-[#cc5833] hover:text-[#ffd] active:bg-pink-600 font-bold uppercase text-sm px-2 py-1.5 rounded outline-none focus:outline-none ease-linear transition-all duration-150"
-                  type="button"
-                >
-                  Delete Selection
-                </button>
-              </div>
+              <button
+                className="mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold uppercase text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
+                type="button"
+              >
+                <i className="fas fa-heart"></i> Checkout Selection
+              </button>
             </div>
           </div>
         </div>
         <div
           className="m-2 mx-auto ag-theme-alpine min-w-fit"
-          style={{ height: '700px', width: '80%' }}
+          style={{ height: '650px', width: '60%' }}
         >
           <AgGridReact
             ref={gridRef}
@@ -247,6 +237,23 @@ function ManageBooksPage() {
             pagination={true}
             rowHeight={60}
           ></AgGridReact>
+        </div>
+        <div className="mt-4 mx-auto w-2/4">
+          <div className="flex items-center justify-center">
+            <button
+              className="mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold uppercase text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
+              type="button"
+            >
+              <i className="fas fa-heart"></i> Add New Book
+            </button>
+
+            <button
+              className="text-[#cc5833] bg-transparent border border-solid border-[#cc5833] hover:bg-[#cc5833] hover:text-[#ffd] active:bg-pink-600 font-bold uppercase text-sm px-2 py-1.5 rounded outline-none focus:outline-none ease-linear transition-all duration-150"
+              type="button"
+            >
+              Delete Selection
+            </button>
+          </div>
         </div>
       </div>
     </div>
