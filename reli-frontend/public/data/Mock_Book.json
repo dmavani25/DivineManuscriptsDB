@@ -1,84 +1,166 @@
 {
     "rows": [
       {
-        "bookName": "A",
-        "authorName": "Auth-1",
-        "religion": "World Religion",
-        "numCopies": 3,
-        "checkedOutCopies": 1,
-        "availableActions": "checkout"
-      },
-      {
-        "bookName": "B",
-        "authorName": "Auth-1",
-        "religion": "Christianity",
-        "numCopies": 7,
-        "checkedOutCopies": 1,
-        "availableActions": "checkout"
-      },
-      {
-        "bookName": "C",
-        "authorName": "Auth-2",
-        "religion": "Islam",
-        "numCopies": 2,
-        "checkedOutCopies": 1,
-        "availableActions": "checkout"
-      },
-      {
-        "bookName": "D",
-        "authorName": "Auth-3",
-        "religion": "World Religion",
-        "numCopies": 8,
-        "checkedOutCopies": 2,
-        "availableActions": "checkout"
-      },
-      {
-        "bookName": "E",
-        "authorName": "Auth-4",
-        "religion": "Christianity",
-        "numCopies": 10,
-        "checkedOutCopies": 1,
-        "availableActions": "checkout"
-      },
-      {
-        "bookName": "F",
-        "authorName": "Auth-4",
-        "religion": "World Religion + Theology",
-        "numCopies": 4,
-        "checkedOutCopies": 1,
-        "availableActions": "checkout"
-      },
-      {
-        "bookName": "G",
-        "authorName": "Auth-5",
-        "religion": "Islam",
-        "numCopies": 6,
-        "checkedOutCopies": 1,
-        "availableActions": "checkout"
-      },
-      {
-        "bookName": "H",
-        "authorName": "Auth-6",
-        "religion": "Islam",
+        "bookName": "American Catholic: A Historical Exploration",
+        "authorName": "Karen Kennelly",
+        "religion": "Catholicism",
+        "shelf": "3.2",
+        "wing": "CHAP-108 Bookcases (closest to chapel)",
         "numCopies": 1,
-        "checkedOutCopies": 1,
-        "availableActions": "checkout"
+        "checkedOutCopies": 0
       },
       {
-        "bookName": "I",
-        "authorName": "Auth-1",
-        "religion": "Hinduism",
-        "numCopies": 7,
-        "checkedOutCopies": 0,
-        "availableActions": "checkout"
+        "bookName": "Catholic Intellectual Life in America: A Historical Study of Persons and Movements",
+        "authorName": "Margaret Mary Reher",
+        "religion": "Catholicism",
+        "shelf": "3.2",
+        "wing": "CHAP-108 Bookcases (closest to chapel)",
+        "numCopies": 1,
+        "checkedOutCopies": 0
       },
       {
-        "bookName": "C",
-        "authorName": "Auth-9",
-        "religion": "Christianity",
-        "numCopies": 3,
-        "checkedOutCopies": 0,
-        "availableActions": "checkout"
+        "bookName": "Examining the Catholic Intellectual Tradition",
+        "authorName": "Anthony J. Cernera and Oliver J. Morgan",
+        "religion": "Catholicism",
+        "shelf": "3.2",
+        "wing": "CHAP-108 Bookcases (closest to chapel)",
+        "numCopies": 1,
+        "checkedOutCopies": 0
+      },
+      {
+        "bookName": "Living Stones: The History and Structure of Catholic Spiritual Life in the United States",
+        "authorName": "Joseph P. Chinnici, O.F.M",
+        "religion": "Catholicism",
+        "shelf": "3.2",
+        "wing": "CHAP-108 Bookcases (closest to chapel)",
+        "numCopies": 1,
+        "checkedOutCopies": 0
+      },
+      {
+        "bookName": "New Catholic Encyclopedia - The Wajtyla Years",
+        "authorName": "N/A",
+        "religion": "Catholicism",
+        "shelf": "3.2",
+        "wing": "CHAP-108 Bookcases (closest to chapel)",
+        "numCopies": 1,
+        "checkedOutCopies": 0
+      },
+      {
+        "bookName": "New Catholic Encyclopedia Volume 1",
+        "authorName": "N/A",
+        "religion": "Catholicism",
+        "shelf": "3.1",
+        "wing": "CHAP-108 Bookcases (closest to chapel)",
+        "numCopies": 1,
+        "checkedOutCopies": 0
+      },
+      {
+        "bookName": "New Catholic Encyclopedia Volume 10",
+        "authorName": "N/A",
+        "religion": "Catholicism",
+        "shelf": "3.1",
+        "wing": "CHAP-108 Bookcases (closest to chapel)",
+        "numCopies": 1,
+        "checkedOutCopies": 0
+      },
+      {
+        "bookName": "New Catholic Encyclopedia Volume 11",
+        "authorName": "N/A",
+        "religion": "Catholicism",
+        "shelf": "3.1",
+        "wing": "CHAP-108 Bookcases (closest to chapel)",
+        "numCopies": 1,
+        "checkedOutCopies": 0
+      },
+      {
+        "bookName": "New Catholic Encyclopedia Volume 12",
+        "authorName": "N/A",
+        "religion": "Catholicism",
+        "shelf": "3.1",
+        "wing": "CHAP-108 Bookcases (closest to chapel)",
+        "numCopies": 1,
+        "checkedOutCopies": 0
+      },
+      {
+        "bookName": "American Catholic: A Historical Exploration",
+        "authorName": "Karen Kennelly",
+        "religion": "Catholicism",
+        "shelf": "3.2",
+        "wing": "CHAP-108 Bookcases (closest to chapel)",
+        "numCopies": 1,
+        "checkedOutCopies": 0
+      },
+      {
+        "bookName": "Catholic Intellectual Life in America: A Historical Study of Persons and Movements",
+        "authorName": "Margaret Mary Reher",
+        "religion": "Catholicism",
+        "shelf": "3.2",
+        "wing": "CHAP-108 Bookcases (closest to chapel)",
+        "numCopies": 1,
+        "checkedOutCopies": 0
+      },
+      {
+        "bookName": "Examining the Catholic Intellectual Tradition",
+        "authorName": "Anthony J. Cernera and Oliver J. Morgan",
+        "religion": "Catholicism",
+        "shelf": "3.2",
+        "wing": "CHAP-108 Bookcases (closest to chapel)",
+        "numCopies": 1,
+        "checkedOutCopies": 0
+      },
+      {
+        "bookName": "Living Stones: The History and Structure of Catholic Spiritual Life in the United States",
+        "authorName": "Joseph P. Chinnici, O.F.M",
+        "religion": "Catholicism",
+        "shelf": "3.2",
+        "wing": "CHAP-108 Bookcases (closest to chapel)",
+        "numCopies": 1,
+        "checkedOutCopies": 0
+      },
+      {
+        "bookName": "New Catholic Encyclopedia - The Wajtyla Years",
+        "authorName": "N/A",
+        "religion": "Catholicism",
+        "shelf": "3.2",
+        "wing": "CHAP-108 Bookcases (closest to chapel)",
+        "numCopies": 1,
+        "checkedOutCopies": 0
+      },
+      {
+        "bookName": "New Catholic Encyclopedia Volume 1",
+        "authorName": "N/A",
+        "religion": "Catholicism",
+        "shelf": "3.1",
+        "wing": "CHAP-108 Bookcases (closest to chapel)",
+        "numCopies": 1,
+        "checkedOutCopies": 0
+      },
+      {
+        "bookName": "New Catholic Encyclopedia Volume 10",
+        "authorName": "N/A",
+        "religion": "Catholicism",
+        "shelf": "3.1",
+        "wing": "CHAP-108 Bookcases (closest to chapel)",
+        "numCopies": 1,
+        "checkedOutCopies": 0
+      },
+      {
+        "bookName": "New Catholic Encyclopedia Volume 11",
+        "authorName": "N/A",
+        "religion": "Catholicism",
+        "shelf": "3.1",
+        "wing": "CHAP-108 Bookcases (closest to chapel)",
+        "numCopies": 1,
+        "checkedOutCopies": 0
+      },
+      {
+        "bookName": "New Catholic Encyclopedia Volume 12",
+        "authorName": "N/A",
+        "religion": "Catholicism",
+        "shelf": "3.1",
+        "wing": "CHAP-108 Bookcases (closest to chapel)",
+        "numCopies": 1,
+        "checkedOutCopies": 0
       }
     ]
   }
