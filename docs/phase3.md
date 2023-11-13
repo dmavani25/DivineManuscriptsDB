@@ -88,24 +88,25 @@ CREATE TABLE Checkings (
 - Google Books API / Open Library API. These APIs can provide book details based on ISBN or title.
 
 ## Data Cleaning:
-- Load the Excel sheets into a tool like Pandas in Python.
-- Examine data for missing values, duplicates, or inconsistent formats.
-- Handle any outliers or errors in the data.
-- Normalize the data (e.g., ensuring consistent casing, date formats, etc.).
+- **[DONE]** Load the Excel sheets into a tool like Pandas in Python.
+- **[DONE]** Examine data for missing values, duplicates, or inconsistent formats.
+- **[DONE]** Handle any outliers or errors in the data.
+- **[DONE]** Normalize the data (e.g., ensuring consistent casing, date formats, etc.).
 
 ## Development:
 
 #### Backend:
-- [DONE] Set up the database and schema.
-- Create API endpoints for CRUD operations on books, users, and checkout logs.
+- **[DONE]** Set up the database and schema.
+- **[DONE]** Create API endpoints for CRUD operations on books, users, and checkout logs.
 - Implement filtering functionality.
 - Add authentication and authorization to ensure only admins can add/delete and everyone else has read-only access.
   
 #### Frontend:
-- Create a dashboard UI for viewing books, users, and checkout logs.
-- Implement filtering functionality on the UI.
-- Add interfaces with the database for adding/deleting books and users.
-- Create UI components to handle book lending and returning.
+- **[DONE]** Create a dashboard UI for viewing books, users, and checkout logs.
+- **[DONE]** Implement filtering functionality on the UI.
+- **[DONE]** Add interfaces with the database for adding/deleting books and users.
+- **[DONE]** Create UI components to handle book lending and returning.
+- Finalize and Connect all the UI components together and link them to backend
   
 ## Extended Goals:
 - Integrate with the chosen publisher API to fetch book details.
@@ -131,12 +132,10 @@ CREATE TABLE Checkings (
 - We decided on a flat structure since we all share similar backgrounds. For now, we will all work as _Full-Stack_ developers with unique tasks.
 
 ## Open Questions:
-- How to deal with copies of the same book being checked out to the same user?
-- How to clean the data most efficiently?
-- The best way to structure the team?
+- How to integrate frontend and backend?
+- How to deploy it to a website so that it is stable for use?
 
 ## Next Steps:
-1. Start the data cleaning process.
-2. Initiate the development process, beginning with the backend and frontend simultaneously.
-3. Regularly test and iterate based on feedback.
-4. Once stable, deploy and document the system.
+1. Finish Remaining Integration and parts of frontend and backend
+2. Regularly test and iterate based on feedback.
+3. Once stable, deploy and document the system.
