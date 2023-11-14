@@ -33,6 +33,7 @@ function ManageCheckOuts() {
       field: 'role',
       filter: 'agTextColumnFilter',
       editable: true,
+      valueFormatter: params => params.data.role.toUpperCase()
     },
   ];
 
