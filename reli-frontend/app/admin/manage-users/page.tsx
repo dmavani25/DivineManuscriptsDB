@@ -179,18 +179,16 @@ function ManageCheckOuts() {
           }`}
         >
           <div className="p-0.5 bg-primary"></div>
-          <div className="p-3 flex justify-between items-center">
-            <input
-              type="checkbox"
-              id="sidebarToggle"
-              className="hidden"
-              checked={showSidebar}
-              onChange={handleToggle}
-            />
-            <label htmlFor="sidebarToggle" className="cursor-pointer p-3">
-              Toggle Sidebar
-            </label>
-            <div className="text-2xl text-primary font-bold">
+          <div className="p-3 flex">
+            <div
+              className="HAMBURGER-ICON space-y-2 p-2 "
+              onClick={handleToggle}
+            >
+              <span className="block h-0.5 w-8 animate-pulse bg-primary"></span>
+              <span className="block h-0.5 w-8 animate-pulse bg-primary"></span>
+              <span className="block h-0.5 w-8 animate-pulse bg-primary"></span>
+            </div>
+            <div className="text-2xl text-primary font-bold p-2">
               Divine Manuscripts
             </div>
             <div className="p-4 flex justify-between items-center">
