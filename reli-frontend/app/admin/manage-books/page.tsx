@@ -212,6 +212,7 @@ function ManageBooksPage() {
 
         {/* Main Content */}
       <div className="outline outline-dashed w-full relative transition-margin">
+        
         {/** create a nav bar */}
         <nav className={`z-50 shadow-md fixed w-full transition-margin ${showSidebar ? 'ml-1/5' : 'ml-0'}`}>
           <div className="p-0.5 bg-primary"></div>

@@ -6,6 +6,7 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import ModalPopUpCellRenderer from 'app/custom-components/modal/ModalPopUpCellRenderer';
 import Navbar from 'app/nav-bar/Navbar';
 import { useRef, useCallback, useState, useEffect } from 'react';
+import Sidebar from 'app/custom-components/side-bar/admin/Sidebar';
 
 function ManageCheckOuts() {
   const gridRef = useRef<any>(null);
@@ -28,11 +29,11 @@ function ManageCheckOuts() {
       editable: false,
     },
     {
-        headerName: 'Role',
-        field: 'role',
-        filter: 'agTextColumnFilter',
-        editable: true,
-      }
+      headerName: 'Role',
+      field: 'role',
+      filter: 'agTextColumnFilter',
+      editable: true,
+    },
   ];
 
   const defaultColumnDefs = {
@@ -73,6 +74,12 @@ function ManageCheckOuts() {
   function hideModal(showModal: boolean = false) {
     setModalProperties({ showModal: showModal } as ModalPropsDef);
   }
+
+  // Mobile sidebar visibility state
+  const [showSidebar, setShowSidebar] = useState(false);
+  const handleToggle = () => {
+    setShowSidebar(!showSidebar);
+  };
 
   const modalComponent = () => (
     <>
@@ -151,11 +158,48 @@ function ManageCheckOuts() {
   };
 
   return (
-    <div>
-      <Navbar />
-      {modalComponent()}
-      <div className="w-full">
-        <div className="mt-24 w-3/5 mx-auto">
+    <div className="h-screen flex">
+      <div
+        className={`w-1/5 transition-all duration-300 ease-in-out overflow-hidden ${
+          showSidebar ? 'block translate-x-0 ' : 'hidden translate-x-full'
+        } outline outline-dashed`}
+      >
+        {/** create a side bar  */}
+        <Sidebar show={showSidebar} setter={setShowSidebar} />
+      </div>
+
+      {/* Main Content */}
+      <div className="outline outline-dashed w-full relative transition-margin">
+        {/** create a nav bar */}
+        <nav
+          className={`z-50 shadow-md fixed w-full transition-margin ${
+            showSidebar ? 'ml-1/5' : 'ml-0'
+          }`}
+        >
+          <div className="p-0.5 bg-primary"></div>
+          <div className="p-3 flex justify-between items-center">
+            <input
+              type="checkbox"
+              id="sidebarToggle"
+              className="hidden"
+              checked={showSidebar}
+              onChange={handleToggle}
+            />
+            <label htmlFor="sidebarToggle" className="cursor-pointer p-3">
+              Toggle Sidebar
+            </label>
+            <div className="text-2xl text-primary font-bold">
+              Divine Manuscripts
+            </div>
+            <div className="p-4 flex justify-between items-center">
+              <div className="flex space-x-4">
+                {/* Notifications icon */}
+                {/* Profile icon */}
+              </div>
+            </div>
+          </div>
+        </nav>
+        <div className="mt-24 w-4/5 mx-auto">
           <div className="flex justify-between">
             <div className="text-2lg text-primary p-1 font-bold">
               Checked Out Books
@@ -179,7 +223,7 @@ function ManageCheckOuts() {
         </div>
         <div
           className="m-2 mx-auto ag-theme-alpine min-w-fit"
-          style={{ height: '650px', width: '60%' }}
+          style={{ height: '650px', width: '80%' }}
         >
           <AgGridReact
             ref={gridRef}
