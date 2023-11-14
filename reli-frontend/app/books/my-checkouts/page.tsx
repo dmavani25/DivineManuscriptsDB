@@ -58,7 +58,7 @@ function ManageCheckOuts() {
       editable: true,
     },
     {
-        headerName: 'Loan Period',
+        headerName: 'Loan Period (Days)',
         field: 'daysCheckedOut',
         filter: 'agNumberColumnFilter',
         editable: false,
@@ -197,7 +197,7 @@ function ManageCheckOuts() {
         <div className="mt-24 w-3/5 mx-auto">
           <div className="flex justify-between">
             <div className="text-2lg text-primary p-1 font-bold">
-              Checked Out Books
+              My Checked Out Books
             </div>
             <div className="flex items-center justify-center">
               <input

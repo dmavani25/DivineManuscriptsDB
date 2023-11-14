@@ -64,7 +64,7 @@ function ManageCheckOuts() {
       editable: true,
     },
     {
-        headerName: 'Loan Period',
+        headerName: 'Loan Period (Days)',
         field: 'daysCheckedOut',
         filter: 'agNumberColumnFilter',
         editable: false,
@@ -183,7 +183,7 @@ function ManageCheckOuts() {
             const timeDifference = currentTimestamp - obj.checkedOutSince;
             // Convert milliseconds to days
             const daysCheckedOut = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-            return {...obj, loanee : "johndoe@amhert.edu", daysCheckedOut : daysCheckedOut}
+            return {...obj, daysCheckedOut : daysCheckedOut}
         })
         setRowData(newData);
       });
