@@ -204,6 +204,8 @@ function ManageCheckOuts() {
 
   return (
     <div className="h-screen flex">
+      {/** Modal component */}
+      {modalComponent()}
       <div
           className={`w-1/5 transition-all duration-300 ease-in-out overflow-hidden ${
             showSidebar ? 'block translate-x-0 ' : 'hidden translate-x-full'
