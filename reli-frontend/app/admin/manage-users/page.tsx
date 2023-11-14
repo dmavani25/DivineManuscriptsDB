@@ -165,14 +165,14 @@ function ManageCheckOuts() {
       <div
         className={`w-1/5 transition-all duration-300 ease-in-out overflow-hidden ${
           showSidebar ? 'block translate-x-0 ' : 'hidden translate-x-full'
-        } outline outline-dashed`}
+        }`}
       >
         {/** create a side bar  */}
         <Sidebar show={showSidebar} setter={setShowSidebar} />
       </div>
 
       {/* Main Content */}
-      <div className="outline outline-dashed w-full relative transition-margin">
+      <div className="w-full relative transition-margin">
         {/** create a nav bar */}
         <nav
           className={`z-50 shadow-md fixed w-full transition-margin ${

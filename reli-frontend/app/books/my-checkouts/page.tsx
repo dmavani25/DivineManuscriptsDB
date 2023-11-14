@@ -6,6 +6,7 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import ModalPopUpCellRenderer from 'app/custom-components/modal/ModalPopUpCellRenderer';
 import Navbar from 'app/nav-bar/Navbar';
 import { useRef, useCallback, useState, useEffect } from 'react';
+import Link from 'next/link';
 
 function ManageCheckOuts() {
   const gridRef = useRef<any>(null);
@@ -58,11 +59,11 @@ function ManageCheckOuts() {
       editable: true,
     },
     {
-        headerName: 'Loan Period (Days)',
-        field: 'daysCheckedOut',
-        filter: 'agNumberColumnFilter',
-        editable: false,
-      }
+      headerName: 'Loan Period (Days)',
+      field: 'daysCheckedOut',
+      filter: 'agNumberColumnFilter',
+      editable: false,
+    },
   ];
 
   const defaultColumnDefs = {
@@ -170,15 +171,21 @@ function ManageCheckOuts() {
         return response.json();
       })
       .then((data) => {
-       const newData = data.map((obj : any)=>{
-            // Calculate the current timestamp
-            const currentTimestamp = new Date().getTime();
-            // Calculate the time difference in milliseconds
-            const timeDifference = currentTimestamp - obj.checkedOutSince;
-            // Convert milliseconds to days
-            const daysCheckedOut = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-            return {...obj, loanee : "johndoe@amhert.edu", daysCheckedOut : daysCheckedOut}
-        })
+        const newData = data.map((obj: any) => {
+          // Calculate the current timestamp
+          const currentTimestamp = new Date().getTime();
+          // Calculate the time difference in milliseconds
+          const timeDifference = currentTimestamp - obj.checkedOutSince;
+          // Convert milliseconds to days
+          const daysCheckedOut = Math.floor(
+            timeDifference / (1000 * 60 * 60 * 24)
+          );
+          return {
+            ...obj,
+            loanee: 'johndoe@amhert.edu',
+            daysCheckedOut: daysCheckedOut,
+          };
+        });
         setRowData(newData);
       });
   }, []);
@@ -234,8 +241,12 @@ function ManageCheckOuts() {
             pagination={true}
             rowHeight={60}
           ></AgGridReact>
+          <div className="p-2">
+            <Link href={'/books'}>
+              <div><h1 className='underline'>View books</h1></div>
+            </Link>
+          </div>
         </div>
-        
       </div>
     </div>
   );

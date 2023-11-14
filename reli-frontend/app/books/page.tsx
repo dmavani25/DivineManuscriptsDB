@@ -8,6 +8,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Navbar from 'app/nav-bar/Navbar';
 import ModalPopUpCellRenderer from 'app/custom-components/modal/ModalPopUpCellRenderer';
 import ModalComponent from 'app/custom-components/modal/ModalComponent';
+import Link from 'next/link';
 // import ChildMessageRenderer from './ChildMessageRenderer';
 
 function BookPage() {
@@ -79,11 +80,11 @@ function BookPage() {
     handleCancel: hideModal,
   };
 
-  function showModal(showModal: boolean, bookData : any) {
+  function showModal(showModal: boolean, bookData: any) {
     const newModalProperties: ModalPropsDef = {
       ...modalProperties,
       showModal: showModal,
-      dialogueText : `${modalProperties.dialogueText} ${bookData.bookName} ?`
+      dialogueText: `${modalProperties.dialogueText} ${bookData.bookName} ?`,
     };
     console.log('New modal props ' + newModalProperties.showModal);
     setModalProperties(newModalProperties);
@@ -174,7 +175,7 @@ function BookPage() {
       <Navbar />
       {modalComponent()}
       <div className="w-full">
-        <div className="mt-24 w-3/5 mx-auto">
+        <div className="mt-20 w-4/5 mx-auto">
           <div className="flex justify-between">
             <div className="text-2lg text-primary p-1 font-bold">
               Available Books
@@ -204,6 +205,13 @@ function BookPage() {
             }}
             gridOptions={gridOptions}
           ></AgGridReact>
+          <div className='p-2'>
+            <Link href={'/books/my-checkouts'}>
+              <div>
+                View <span className="underline"> my checkout books </span>
+              </div>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

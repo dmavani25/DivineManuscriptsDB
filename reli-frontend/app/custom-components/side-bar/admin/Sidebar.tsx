@@ -56,7 +56,7 @@ export default function Sidebar({
 
   return (
     <>
-      <div className="outline outline-dashed shadow-md bg-primary fixed left-0 h-full">
+      <div className="shadow-md bg-primary fixed left-0 h-full">
         <div className={`${className}${appendClass}`}>
           <div className="p-2 flex">
             <Link href="/">{/*eslint-disable-next-line*/}</Link>
@@ -65,7 +65,7 @@ export default function Sidebar({
             <MenuItem name="Home" route="" />
             <MenuItem name="Manage Books" route="/admin/manage-books" />
             <MenuItem name="Manage Users" route="/admin/manage-users" />
-            <MenuItem name="Manage checkouts" route="/admin/manage-checkouts" />
+            <MenuItem name="Manage Checkouts" route="/admin/manage-checkouts" />
           </div>
         </div>
         {show ? <ModalOverlay /> : <></>}
