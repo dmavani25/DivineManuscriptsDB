@@ -211,10 +211,10 @@ function ManageBooksPage() {
                 className="shadow appearance border border-primary rounded p-1 focus:outline-none focus:shadow-outline"
               />
               <button
-                className="mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold uppercase text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
+                className="mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
                 type="button"
               >
-                <i className="fas fa-heart"></i> Checkout Selection
+                <i className="fas fa-heart"></i> Checkout selection
               </button>
             </div>
           </div>
@@ -241,17 +241,17 @@ function ManageBooksPage() {
         <div className="mt-4 mx-auto w-2/4">
           <div className="flex items-center justify-center">
             <button
-              className="mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold uppercase text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
+              className="mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold text-sm px-2 py-1.5 camelCase rounded outline-none ease-linear transition-all duration-150"
               type="button"
             >
-              <i className="fas fa-heart"></i> Add New Book
+              <i className="fas fa-heart"></i> Add new book
             </button>
 
             <button
               className="text-[#cc5833] bg-transparent border border-solid border-[#cc5833] hover:bg-[#cc5833] hover:text-[#ffd] active:bg-pink-600 font-bold uppercase text-sm px-2 py-1.5 rounded outline-none focus:outline-none ease-linear transition-all duration-150"
               type="button"
             >
-              Delete Selection
+              Delete selection
             </button>
           </div>
         </div>

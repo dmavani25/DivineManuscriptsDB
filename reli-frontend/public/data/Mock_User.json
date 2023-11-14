@@ -1,10 +1,12 @@
-[{"email":"dmavani25@amherst.edu","role":"student"},
-{"email":"mriondato@amherst.edu","role":"professor"},
-{"email":"religion@amherst.edu","role":"admin"},
-{"email":"bngacho24@amherst.edu","role":"student"},
-{"email":"sfkaplan@amherst.edu","role":"professor"},
-{"email":"aaly24@amherst.edu","role":"student"},
-{"email":"nhorton@amherst.edu","role":"student"},
-{"email":"mtahir24@amherst.edu","role":"student"},
-{"email":"skotlin25@amherst.edu","role":"student"},
-{"email":"sklearn@amherst.edu","role":"professor"}]
+[
+  { "email": "dmavani25@amherst.edu", "role": "student" },
+  { "email": "mriondato@amherst.edu", "role": "professor" },
+  { "email": "religion@amherst.edu", "role": "admin" },
+  { "email": "bngacho24@amherst.edu", "role": "student" },
+  { "email": "sfkaplan@amherst.edu", "role": "professor" },
+  { "email": "aaly24@amherst.edu", "role": "student" },
+  { "email": "nhorton@amherst.edu", "role": "student" },
+  { "email": "mtahir24@amherst.edu", "role": "student" },
+  { "email": "skotlin25@amherst.edu", "role": "student" },
+  { "email": "sklearn@amherst.edu", "role": "professor" }
+]

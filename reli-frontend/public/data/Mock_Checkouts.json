@@ -1,0 +1,58 @@
+[
+    {
+      "bookName": "American Catholic: A Historical Exploration",
+      "authorName": "Karen Kennelly",
+      "numCopies": 1,
+      "checkedOutSince": "1695407811000",
+      "loanee" : "johndoe@amherst.edu"
+    },
+    {
+      "bookName": "Catholic Intellectual Life in America: A Historical Study of Persons and Movements",
+      "authorName": "Margaret Mary Reher",
+      "numCopies": 2,
+      "checkedOutSince": "1687763717000",
+      "loanee" : "johndoe@amherst.edu"
+    },
+    {
+      "bookName": "Examining the Catholic Intellectual Tradition",
+      "authorName": "Anthony J. Cernera and Oliver J. Morgan",
+      "numCopies": 3,
+      "checkedOutSince": "1680610467000",
+      "loanee" : "johndoe@amherst.edu"
+    },
+    {
+      "bookName": "Living Stones: The History and Structure of Catholic Spiritual Life in the United States",
+      "authorName": "Joseph P. Chinnici, O.F.M",
+      "numCopies": 4,
+      "checkedOutSince": "1672402924000",
+      "loanee" : "johndoe@amherst.edu"
+    },
+    {
+      "bookName": "New Catholic Encyclopedia - The Wajtyla Years",
+      "authorName": "N/A",
+      "numCopies": 5,
+      "checkedOutSince": "1692744154000",
+      "loanee" : "johndoe@amherst.edu"
+    },
+    {
+      "bookName": "New Catholic Encyclopedia Volume 1",
+      "authorName": "N/A",
+      "numCopies": 6,
+      "checkedOutSince": "1692544154000",
+      "loanee" : "johndoe@amherst.edu"
+    },
+    {
+      "bookName": "New Catholic Encyclopedia Volume 10",
+      "authorName": "N/A",
+      "numCopies": 7,
+      "checkedOutSince": "1672744154200",
+      "loanee" : "johndoe@amherst.edu"
+    },
+    {
+      "bookName": "New Catholic Encyclopedia Volume 11",
+      "authorName": "N/A",
+      "numCopies": 8,
+      "checkedOutSince": "1692734174000",
+      "loanee" : "johndoe@amherst.edu"
+    }
+]
