@@ -201,7 +201,7 @@ function ManageCheckOuts() {
       <Navbar />
       {modalComponent()}
       <div className="w-full">
-        <div className="mt-24 w-3/5 mx-auto">
+        <div className="mt-20 w-4/5 mx-auto">
           <div className="flex justify-between">
             <div className="text-2lg text-primary p-1 font-bold">
               My Checked Out Books
@@ -215,17 +215,25 @@ function ManageCheckOuts() {
                 className="shadow appearance border border-primary rounded p-1 focus:outline-none focus:shadow-outline"
               />
               <button
-                className="mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
+                className="px-10 mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
                 type="button"
               >
                 <i className="fas fa-heart"></i> CheckIn selection
               </button>
+              <Link href={'/books'}>
+                <button
+                  className="px-10 mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold text-sm px-2 py-1.5 camelCase rounded outline-none ease-linear transition-all duration-150"
+                  type="button"
+                >
+                  <i className="fas fa-heart"></i> View Books
+                </button>
+              </Link>
             </div>
           </div>
         </div>
         <div
           className="m-2 mx-auto ag-theme-alpine min-w-fit"
-          style={{ height: '650px', width: '60%' }}
+          style={{ height: '650px', width: '80%' }}
         >
           <AgGridReact
             ref={gridRef}
@@ -241,11 +249,6 @@ function ManageCheckOuts() {
             pagination={true}
             rowHeight={60}
           ></AgGridReact>
-          <div className="p-2">
-            <Link href={'/books'}>
-              <div><h1 className='underline'>View books</h1></div>
-            </Link>
-          </div>
         </div>
       </div>
     </div>

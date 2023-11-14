@@ -188,6 +188,14 @@ function BookPage() {
                 onInput={onFilterTextBoxChanged}
                 className="shadow appearance border border-primary rounded p-1 focus:outline-none focus:shadow-outline"
               />
+              <Link href={'/books/my-checkouts'}>
+                <button
+                  className="px-5 mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold text-sm px-2 py-1.5 camelCase rounded outline-none ease-linear transition-all duration-150"
+                  type="button"
+                >
+                  <i className="fas fa-heart"></i> View My Checked Out Books
+                </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -205,13 +213,6 @@ function BookPage() {
             }}
             gridOptions={gridOptions}
           ></AgGridReact>
-          <div className='p-2'>
-            <Link href={'/books/my-checkouts'}>
-              <div>
-                View <span className="underline"> my checkout books </span>
-              </div>
-            </Link>
-          </div>
         </div>
       </div>
     </div>
