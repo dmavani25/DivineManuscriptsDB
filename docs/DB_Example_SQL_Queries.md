@@ -14,7 +14,7 @@ OR religion LIKE '%keyword%';
 
 ### 2. Add a New Book (Admin Access)
 ```sql
-INSERT INTO Book (bookName, authorName, religion, shelf, wing, numCopies, checkedOutCopies)
+INSERT INTO book (bookname, authorname, religion, shelf, wing, numcopies, checkedOutCopies)
 VALUES ('Example Book', 'Author Name', 'Religion', 'Shelf Location', 'Wing Location', 5, 0);
 ```
 
