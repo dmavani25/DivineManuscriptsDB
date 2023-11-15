@@ -23,6 +23,8 @@ erDiagram
         bookName VARCHAR
         authorName VARCHAR
         religion VARCHAR
+        shelf VARCHAR
+        wing VARCHAR
         numCopies INTEGER
         checkedOutCopies INTEGER
     }
