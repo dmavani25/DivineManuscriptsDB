@@ -269,6 +269,7 @@ function ManageBooksPage() {
             context={{
               showModal,
             }}
+            animateRows={true}
             rowSelection={'multiple'}
             suppressRowClickSelection={true}
             suppressCellFocus={true}

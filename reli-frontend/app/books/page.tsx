@@ -201,6 +201,7 @@ function BookPage() {
             context={{
               showModal,
             }}
+            animateRows={true}
             gridOptions={gridOptions}
           ></AgGridReact>
         </div>
