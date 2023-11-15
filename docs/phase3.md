@@ -9,6 +9,8 @@
 
 ## The Revised ER-diagram,
 
+![image](https://github.com/dmavani25/DivineManuscriptsDB/assets/89651168/ff84e0ae-4dd8-4780-8bcd-b42dcd8ec5bc)
+
 ```mermaid
 erDiagram
     User ||--|{ Checkings : "checks out"
@@ -106,7 +108,8 @@ CREATE TABLE Checkings (
 - **[DONE]** Implement filtering functionality on the UI.
 - **[DONE]** Add interfaces with the database for adding/deleting books and users.
 - **[DONE]** Create UI components to handle book lending and returning.
-- Finalize and Connect all the UI components together and link them to backend
+- **[DONE]** Finalize and Connect all the UI components together and link them to backend
+- Add custom pages and views for different users: admin, faculty, students
   
 ## Extended Goals:
 - Integrate with the chosen publisher API to fetch book details.
@@ -129,8 +132,7 @@ CREATE TABLE Checkings (
 - Provide training or a walkthrough to ADC or any other relevant stakeholders.
 
 ## Open Questions:
-- How to integrate frontend and backend well while binding it with Linux server?
-- How to deploy it to a website so that it is stable for use?
+- How to initiate single sign on with Duo/SSO Amherst College so that we can assign roles of admin, faculty, and student?
 
 ## Next Steps:
 1. Finish Remaining Integration and parts of frontend and backend
