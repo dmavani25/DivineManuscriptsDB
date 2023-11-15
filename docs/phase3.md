@@ -9,8 +9,6 @@
 
 ## The Revised ER-diagram,
 
-![image](https://github.com/dmavani25/DivineManuscriptsDB/assets/89651168/ff84e0ae-4dd8-4780-8bcd-b42dcd8ec5bc)
-
 ```mermaid
 erDiagram
     User ||--|{ Checkings : "checks out"
