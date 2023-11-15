@@ -6,8 +6,9 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import ModalPopUpCellRenderer from 'app/custom-components/modal/ModalPopUpCellRenderer';
 import Navbar from 'app/nav-bar/Navbar';
 import { useRef, useCallback, useState, useEffect } from 'react';
+import Link from 'next/link';
 
-function ManageBooksPage() {
+function ManageCheckOuts() {
   const gridRef = useRef<any>(null);
 
   const onFilterTextBoxChanged = useCallback(() => {
@@ -58,22 +59,10 @@ function ManageBooksPage() {
       editable: true,
     },
     {
-      headerName: 'Religion',
-      field: 'religion',
-      filter: 'agTextColumnFilter',
-      editable: true,
-    },
-    {
-      headerName: 'Wing',
-      field: 'wing',
-      filter: 'agTextColumnFilter',
-      editable: true,
-    },
-    {
-      headerName: 'Shelf',
-      field: 'shelf',
+      headerName: 'Loan Period (Days)',
+      field: 'daysCheckedOut',
       filter: 'agNumberColumnFilter',
-      editable: true,
+      editable: false,
     },
   ];
 
@@ -172,7 +161,7 @@ function ManageBooksPage() {
 
   const [rowData, setRowData] = useState([]);
   useEffect(() => {
-    fetch('../data/Mock_Book.json', {
+    fetch('../data/Mock_Checkouts.json', {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
@@ -182,7 +171,22 @@ function ManageBooksPage() {
         return response.json();
       })
       .then((data) => {
-        setRowData(data.rows);
+        const newData = data.map((obj: any) => {
+          // Calculate the current timestamp
+          const currentTimestamp = new Date().getTime();
+          // Calculate the time difference in milliseconds
+          const timeDifference = currentTimestamp - obj.checkedOutSince;
+          // Convert milliseconds to days
+          const daysCheckedOut = Math.floor(
+            timeDifference / (1000 * 60 * 60 * 24)
+          );
+          return {
+            ...obj,
+            loanee: 'johndoe@amhert.edu',
+            daysCheckedOut: daysCheckedOut,
+          };
+        });
+        setRowData(newData);
       });
   }, []);
 
@@ -197,10 +201,10 @@ function ManageBooksPage() {
       <Navbar />
       {modalComponent()}
       <div className="w-full">
-        <div className="mt-24 w-3/5 mx-auto">
+        <div className="mt-20 w-4/5 mx-auto">
           <div className="flex justify-between">
             <div className="text-2lg text-primary p-1 font-bold">
-              Book Records
+              My Checked Out Books
             </div>
             <div className="flex items-center justify-center">
               <input
@@ -211,17 +215,25 @@ function ManageBooksPage() {
                 className="shadow appearance border border-primary rounded p-1 focus:outline-none focus:shadow-outline"
               />
               <button
-                className="mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold uppercase text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
+                className="px-10 mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
                 type="button"
               >
-                <i className="fas fa-heart"></i> Checkout Selection
+                <i className="fas fa-heart"></i> CheckIn selection
               </button>
+              <Link href={'/books'}>
+                <button
+                  className="px-10 mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold text-sm px-2 py-1.5 camelCase rounded outline-none ease-linear transition-all duration-150"
+                  type="button"
+                >
+                  <i className="fas fa-heart"></i> View Books
+                </button>
+              </Link>
             </div>
           </div>
         </div>
         <div
           className="m-2 mx-auto ag-theme-alpine min-w-fit"
-          style={{ height: '650px', width: '60%' }}
+          style={{ height: '650px', width: '80%' }}
         >
           <AgGridReact
             ref={gridRef}
@@ -238,26 +250,9 @@ function ManageBooksPage() {
             rowHeight={60}
           ></AgGridReact>
         </div>
-        <div className="mt-4 mx-auto w-2/4">
-          <div className="flex items-center justify-center">
-            <button
-              className="mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold uppercase text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
-              type="button"
-            >
-              <i className="fas fa-heart"></i> Add New Book
-            </button>
-
-            <button
-              className="text-[#cc5833] bg-transparent border border-solid border-[#cc5833] hover:bg-[#cc5833] hover:text-[#ffd] active:bg-pink-600 font-bold uppercase text-sm px-2 py-1.5 rounded outline-none focus:outline-none ease-linear transition-all duration-150"
-              type="button"
-            >
-              Delete Selection
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );
 }
 
-export default ManageBooksPage;
+export default ManageCheckOuts;

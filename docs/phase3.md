@@ -68,8 +68,8 @@ CREATE TABLE Checkings (
     userEmail VARCHAR(255) NOT NULL,
     bookName VARCHAR(255) NOT NULL,
     authorName VARCHAR(255) NOT NULL,
-    FOREIGN KEY (userEmail) REFERENCES User(email),
-    FOREIGN KEY (bookName, authorName) REFERENCES Book(bookName, authorName)
+    FOREIGN KEY (userEmail) REFERENCES User(email) ON DELETE CASCADE,
+    FOREIGN KEY (bookName, authorName) REFERENCES Book(bookName, authorName) ON DELETE CASCADE
 );
 ```
 
@@ -98,7 +98,7 @@ CREATE TABLE Checkings (
 #### Backend:
 - **[DONE]** Set up the database and schema.
 - **[DONE]** Create API endpoints for CRUD operations on books, users, and checkout logs.
-- Implement filtering functionality.
+- **[DONE]** Implement filtering functionality.
 - Add authentication and authorization to ensure only admins can add/delete and everyone else has read-only access.
   
 #### Frontend:
@@ -128,11 +128,8 @@ CREATE TABLE Checkings (
 - Document the system, including API endpoints, database schema, and any other relevant details.
 - Provide training or a walkthrough to ADC or any other relevant stakeholders.
 
-## Roles:
-- We decided on a flat structure since we all share similar backgrounds. For now, we will all work as _Full-Stack_ developers with unique tasks.
-
 ## Open Questions:
-- How to integrate frontend and backend?
+- How to integrate frontend and backend well while binding it with Linux server?
 - How to deploy it to a website so that it is stable for use?
 
 ## Next Steps:
