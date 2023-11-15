@@ -1,14 +1,9 @@
 import { Pool, QueryResult } from 'pg';
+import { auth } from './auth';
 
 console.log("\nConnecting to database.......................\n");
 // Set up a connection pool
-export const pool = new Pool({
-    user: '',
-    host: '',
-    database: '',
-    password: '',
-    port: 5432, // or your PostgreSQL port
-});
+export const pool = new Pool(auth);
 
 // Export the necessary functions
 export const query = (text: string, params?: any[]): Promise<QueryResult> => {
