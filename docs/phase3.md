@@ -68,8 +68,8 @@ CREATE TABLE Checkings (
     userEmail VARCHAR(255) NOT NULL,
     bookName VARCHAR(255) NOT NULL,
     authorName VARCHAR(255) NOT NULL,
-    FOREIGN KEY (userEmail) REFERENCES User(email),
-    FOREIGN KEY (bookName, authorName) REFERENCES Book(bookName, authorName)
+    FOREIGN KEY (userEmail) REFERENCES User(email) ON DELETE CASCADE,
+    FOREIGN KEY (bookName, authorName) REFERENCES Book(bookName, authorName) ON DELETE CASCADE
 );
 ```
 
