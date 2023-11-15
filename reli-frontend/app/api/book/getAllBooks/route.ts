@@ -1,5 +1,5 @@
 
-import {query, getClient, pool} from '../../../db/db';
+import {query, getClient, pool} from '../../../../db/db';
 
 // EXAMPLE http QUERY
 export async function GET() {

@@ -23,17 +23,17 @@ function BookPage() {
   const colDefs: ColDef[] = [
     {
       headerName: 'Book Name',
-      field: 'bookName',
+      field: 'bookname',
       filter: 'agTextColumnFilter',
     },
     {
       headerName: 'Author Name',
-      field: 'authorName',
+      field: 'authorname',
       filter: 'agTextColumnFilter',
     },
     {
       headerName: 'Num Copies',
-      field: 'numCopies',
+      field: 'numcopies',
       filter: 'agNumberColumnFilter',
     },
     { headerName: 'Religion', field: 'religion', filter: 'agTextColumnFilter' },
@@ -83,7 +83,7 @@ function BookPage() {
     const newModalProperties: ModalPropsDef = {
       ...modalProperties,
       showModal: showModal,
-      dialogueText : `${modalProperties.dialogueText} ${bookData.bookName} ?`
+      dialogueText : `${modalProperties.dialogueText} ${bookData.bookname} ?`
     };
     console.log('New modal props ' + newModalProperties.showModal);
     setModalProperties(newModalProperties);
@@ -149,20 +149,10 @@ function BookPage() {
 
   const [rowData, setRowData] = useState([]);
   useEffect(() => {
-    fetch('../data/Mock_Book.json', {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setRowData(data.rows);
-      });
+    fetch('api/book/getAllBooks')
+      .then((res) => res.json())
+      .then((rowData) => setRowData(rowData));
   }, []);
-
   const gridOptions = {
     suppressCellFocus: true,
     pagination: true,
