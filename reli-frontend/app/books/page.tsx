@@ -165,7 +165,7 @@ function BookPage() {
   useEffect(() => {
     fetch('api/book/getAllBooks')
       .then((res) => res.json())
-      .then((rowData) => setRowData(rowData));
+      .then((fetchedRowData) => setRowData(fetchedRowData));
   }, []);
   const gridOptions = {
     suppressCellFocus: true,
