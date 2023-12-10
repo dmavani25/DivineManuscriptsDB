@@ -26,7 +26,6 @@ function ManageCheckOuts() {
       headerCheckboxSelection: true,
       checkboxSelection: true,
       showDisabledCheckboxes: true,
-      editable: true,
       valueSetter: (params) => {
         const newVal = params.newValue;
         const valueChanged = params.data.bookName !== newVal;
@@ -41,7 +40,6 @@ function ManageCheckOuts() {
       headerName: 'Author Name',
       field: 'authorName',
       filter: 'agTextColumnFilter',
-      editable: true,
       valueSetter: (params) => {
         const newVal = params.newValue;
         const valueChanged = params.data.authorName !== newVal;
@@ -56,13 +54,11 @@ function ManageCheckOuts() {
       headerName: 'Num Copies',
       field: 'numCopies',
       filter: 'agNumberColumnFilter',
-      editable: true,
     },
     {
       headerName: 'Loan Period (Days)',
       field: 'daysCheckedOut',
       filter: 'agNumberColumnFilter',
-      editable: false,
     },
   ];
 
@@ -70,6 +66,7 @@ function ManageCheckOuts() {
     sortable: true,
     filter: true,
     resizable: true,
+    editable : false,
     flex: 1,
     minWidth: 100,
     cellClass: 'px-4 py-2 cell-wrap-text', // Apply Tailwind CSS classes to grid cells
