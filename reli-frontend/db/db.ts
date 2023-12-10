@@ -1,5 +1,5 @@
 import { Pool, QueryResult } from 'pg';
-import { auth } from './auth';
+import { auth } from './db-auth';
 
 console.log("\nConnecting to database.......................\n");
 // Set up a connection pool
