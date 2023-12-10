@@ -18,6 +18,8 @@ function ManageCheckOuts() {
     gridRef?.current?.api?.setQuickFilter(filterValue);
   }, []);
 
+  const [selectedRowIds, setSelectedRowIds] = useState([]);
+
   const colDefs: ColDef[] = [
     {
       headerName: 'Book Name',
@@ -66,7 +68,7 @@ function ManageCheckOuts() {
     sortable: true,
     filter: true,
     resizable: true,
-    editable : false,
+    editable: false,
     flex: 1,
     minWidth: 100,
     cellClass: 'px-4 py-2 cell-wrap-text', // Apply Tailwind CSS classes to grid cells
@@ -100,6 +102,30 @@ function ManageCheckOuts() {
 
   function hideModal(showModal: boolean = false) {
     setModalProperties({ showModal: showModal } as ModalPropsDef);
+  }
+
+  const onSelectedRowsChanged = (params: any) => {
+    // get selected rows of data
+    const selectedData = params.api.getSelectedRows();
+    // Function to generate a unique ID for each book
+    const generateId = (book: any) => `${book.bookName}-${book.authorName}`;
+
+    // Generate IDs for the selected rows
+    const selectedDataIDs = selectedData.map((book: any) => generateId(book));
+
+    // Update the state with the selected row IDs
+    setSelectedRowIds(selectedDataIDs); // Assuming setRowId is your state setter function
+
+    console.log('Selection Changed', selectedDataIDs);
+  };
+
+  const handleCheckIn = (rowIds : any) => {
+    console.log(rowIds)
+    console.log('checking in ' + rowIds.toString())
+    // add logic to update the state and the db.
+    
+    // change the state and decrement numcopies by 1
+    
   }
 
   const modalComponent = () => (
@@ -179,7 +205,6 @@ function ManageCheckOuts() {
           );
           return {
             ...obj,
-            loanee: 'johndoe@amhert.edu',
             daysCheckedOut: daysCheckedOut,
           };
         });
@@ -214,6 +239,9 @@ function ManageCheckOuts() {
               <button
                 className="px-10 mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
                 type="button"
+                onClick={() =>
+                  handleCheckIn(selectedRowIds)
+                }
               >
                 <i className="fas fa-heart"></i> CheckIn selection
               </button>
@@ -244,6 +272,7 @@ function ManageCheckOuts() {
             rowSelection={'multiple'}
             suppressRowClickSelection={true}
             suppressCellFocus={true}
+            onSelectionChanged={onSelectedRowsChanged}
             pagination={true}
             rowHeight={60}
           ></AgGridReact>
