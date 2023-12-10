@@ -2,6 +2,8 @@
 
 import Navbar from 'app/nav-bar/Navbar';
 import React, { useState } from 'react';
+import { AuthError } from 'next-auth';
+import { signIn } from 'auth';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -10,9 +12,21 @@ const Login = () => {
 
   const authenticate = async (formData: any) => {
     try {
-      // await signIn('credentials', formData);
+      await signIn('credentials', formData);
     } catch (error) {
-      
+      if (error instanceof AuthError) {
+        switch (error.type) {
+          case 'CredentialsSignin':
+            setError('Invalid credentials.');
+            break;
+          default:
+            setError('Something went wrong.');
+            break;
+        }
+      } else {
+        console.error('Non-authentication error occurred:', error);
+        setError('An unexpected error occurred.');
+      }
     }
   };
 
