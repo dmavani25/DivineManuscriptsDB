@@ -83,25 +83,37 @@ function ManageCheckOuts() {
   const modalProperties: ModalPropsDef = {
     showModal: false,
     titleText: 'Checkout Book',
-    dialogueText: 'Are you sure you want to checkout ',
+    dialogueText: 'Are you sure you want to checkout a single copy of these ',
     okButton: 'Checkout',
     cancelButton: 'Cancel',
     handleOk: hideModal,
     handleCancel: hideModal,
   };
 
-  function showModal(showModal: boolean, bookData: any) {
-    const newModalProperties: ModalPropsDef = {
+  function showModal(showModal: boolean, bookcount: any) {
+    let newModalProperties: ModalPropsDef = {
       ...modalProperties,
       showModal: showModal,
-      dialogueText: `${modalProperties.dialogueText} ${bookData.bookName} ?`,
+      dialogueText: `${modalProperties.dialogueText} ${bookcount} editions?`,
     };
+
+    if(bookcount <= 0){
+      newModalProperties = {
+        ...modalProperties,
+        showModal: showModal,
+        dialogueText: `Please select at least one book`,
+        okButton: 'OK',        
+      };
+
+    }
+    
     console.log('New modal props ' + newModalProperties.showModal);
     setModalProperties(newModalProperties);
   }
 
   function hideModal(showModal: boolean = false) {
     setModalProperties({ showModal: showModal } as ModalPropsDef);
+    return;
   }
 
   const onSelectedRowsChanged = (params: any) => {
@@ -120,6 +132,7 @@ function ManageCheckOuts() {
   };
 
   const handleCheckIn = (rowIds : any) => {
+    if(rowIds.length <= 0) hideModal();
     console.log(rowIds)
     console.log('checking in ' + rowIds.toString())
     // add logic to update the state and the db.
@@ -165,9 +178,7 @@ function ManageCheckOuts() {
                     className="text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() =>
-                      setModalProperties({
-                        showModal: false,
-                      } as ModalPropsDef)
+                      handleCheckIn(selectedRowIds)
                     }
                   >
                     {modalProps.okButton}
@@ -239,8 +250,7 @@ function ManageCheckOuts() {
               <button
                 className="px-10 mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
                 type="button"
-                onClick={() =>
-                  handleCheckIn(selectedRowIds)
+                onClick={() =>showModal(true, selectedRowIds.length)
                 }
               >
                 <i className="fas fa-heart"></i> CheckIn selection

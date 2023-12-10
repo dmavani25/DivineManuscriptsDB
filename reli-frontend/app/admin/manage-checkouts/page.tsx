@@ -82,6 +82,7 @@ function ManageCheckOuts() {
   };
 
   const [columnDefs] = useState(colDefs);
+  const [selectedRowIds, setSelectedRowIds] = useState([]);
 
   const [modalProps, setModalProperties] = useState({
     showModal: false,
@@ -116,6 +117,30 @@ function ManageCheckOuts() {
   const handleToggle = () => {
     setShowSidebar(!showSidebar);
   };
+
+  const onSelectedRowsChanged = (params: any) => {
+    // get selected rows of data
+    const selectedData = params.api.getSelectedRows();
+    // Function to generate a unique ID for each book
+    const generateId = (book: any) => `${book.bookName}-${book.authorName}`;
+
+    // Generate IDs for the selected rows
+    const selectedDataIDs = selectedData.map((book: any) => generateId(book));
+
+    // Update the state with the selected row IDs
+    setSelectedRowIds(selectedDataIDs); // Assuming setRowId is your state setter function
+
+    console.log('Selection Changed', selectedDataIDs);
+  };
+
+  const handleCheckIn = (rowIds : any) => {
+    console.log(rowIds)
+    console.log('checking in ' + rowIds.toString())
+    // add logic to update the state and the db.
+    
+    // change the state and decrement numcopies by 1
+    
+  }
 
   const modalComponent = () => (
     <>
