@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
 
     const client = await getClient();
     try {
-        const { rows } = await query(queryString, queryParams);
+        const { rows } = await client.query(queryString, queryParams);
         if (rows.length === 0) {
             return new Response("No books found with the provided criteria", { status: 404 });
         }
@@ -65,7 +65,7 @@ export async function PUT(req: NextRequest) {
     const client = await getClient();
     // Validate request parameters against schema. Regex ensures that only alphanumeric characters plus symbols are allowed in bookname
     try {
-        const rows = await query(`UPDATE public.book SET religion = $3, shelf = $4, wing = $5, numcopies = $6, checkedoutcopies = $7 WHERE bookname = $1 AND authorname = $2`, [
+        const rows = await client.query(`UPDATE public.book SET religion = $3, shelf = $4, wing = $5, numcopies = $6, checkedoutcopies = $7 WHERE bookname = $1 AND authorname = $2`, [
             book.bookname,
             book.authorname,
             book.religion,
@@ -103,7 +103,7 @@ export async function DELETE(req: NextRequest){
     }
 
     try {
-        const rows = await query(`DELETE FROM public.book WHERE bookname = $1 AND authorname = $2`, [bookname, authorname]);
+        const rows = await client.query(`DELETE FROM public.book WHERE bookname = $1 AND authorname = $2`, [bookname, authorname]);
         if (rows.rowCount === 0) {
             return new Response("DELETE request received but book does not exist", { status: 200 });
         }
@@ -156,7 +156,7 @@ export async function POST(req: NextRequest) {
     try {
 
 
-        const rows = await query(`INSERT INTO public.book (bookname, authorname, religion, shelf, wing, numcopies, checkedoutcopies)
+        const rows = await client.query(`INSERT INTO public.book (bookname, authorname, religion, shelf, wing, numcopies, checkedoutcopies)
         VALUES ($1, $2, $3, $4, $5, $6, $7) ON CONFLICT (bookname, authorname) DO NOTHING
         `, [
             book.bookname,

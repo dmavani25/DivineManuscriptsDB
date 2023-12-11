@@ -15,6 +15,9 @@ export async function GET(req: NextRequest) {
             whereClauses.push(`${key} = $${queryParams.length}`);
         }
     }
+    if (whereClauses.length === 0) {
+        return new Response("GET request received but no query parameters provided", { status: 400 });
+    }
 
     let queryString = 'SELECT * FROM "User"';
     if (whereClauses.length > 0) {
@@ -46,7 +49,7 @@ export async function POST (req: NextRequest) {
         if (!email || !role) {
             return new NextResponse('Email and role are required', { status: 400 });
         }
-        const result = await query('INSERT INTO "User" (email, role) VALUES ($1, $2) ON CONFLICT (email) DO NOTHING RETURNING * ', [email, role]);
+        const result = await client.query('INSERT INTO "User" (email, role) VALUES ($1, $2) ON CONFLICT (email) DO NOTHING RETURNING * ', [email, role]);
         return NextResponse.json(result.rows[0]);
     } catch (error) {
         return new NextResponse('Internal Server Error', { status: 500 });
@@ -67,7 +70,7 @@ export async function PUT (req: NextRequest) {
             return new NextResponse('Email and role are required', { status: 400 });
         }
 
-        const result = await query('UPDATE "User" SET role = $1 WHERE email = $2 RETURNING *', [role, email]);
+        const result = await client.query('UPDATE "User" SET role = $1 WHERE email = $2 RETURNING *', [role, email]);
         if (result.rows.length === 0) {
             return new NextResponse('User not found', { status: 404 });
         } else {
@@ -85,7 +88,7 @@ export async function DELETE (req: NextRequest) {
     try {
         const searchParams = req.nextUrl.searchParams; 
         const email = searchParams.get('email');
-        const result = await query('DELETE FROM "User" WHERE email = $1 RETURNING *', [email]);
+        const result = await client.query('DELETE FROM "User" WHERE email = $1 RETURNING *', [email]);
 
         if (result.rows.length === 0) {
             return new NextResponse('User not found', { status: 404 });
