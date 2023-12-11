@@ -23,7 +23,7 @@ function ManageCheckOuts() {
   const colDefs: ColDef[] = [
     {
       headerName: 'Book Name',
-      field: 'bookName',
+      field: 'bookname',
       filter: 'agTextColumnFilter',
       headerCheckboxSelection: true,
       checkboxSelection: true,
@@ -40,7 +40,7 @@ function ManageCheckOuts() {
     },
     {
       headerName: 'Author Name',
-      field: 'authorName',
+      field: 'authorname',
       filter: 'agTextColumnFilter',
       valueSetter: (params) => {
         const newVal = params.newValue;
@@ -54,8 +54,17 @@ function ManageCheckOuts() {
     },
     {
       headerName: 'Num Copies',
-      field: 'numCopies',
+      field: 'numcopies',
       filter: 'agNumberColumnFilter',
+      valueSetter: (params) => {
+        const newVal = params.newValue;
+        const valueChanged = params.data.numCopies !== newVal;
+        if (valueChanged) {
+          console.log('Value changed ' + newVal);
+          params.data.numCopies = newVal;
+        }
+        return valueChanged;
+      },
     },
     {
       headerName: 'Loan Period (Days)',
@@ -82,9 +91,9 @@ function ManageCheckOuts() {
 
   const modalProperties: ModalPropsDef = {
     showModal: false,
-    titleText: 'Checkout Book',
-    dialogueText: 'Are you sure you want to checkout a single copy of these ',
-    okButton: 'Checkout',
+    titleText: 'Checkin Book',
+    dialogueText: 'Are you sure you want to checkin a single copy of these ',
+    okButton: 'Checkin',
     cancelButton: 'Cancel',
     handleOk: hideModal,
     handleCancel: hideModal,
@@ -120,7 +129,7 @@ function ManageCheckOuts() {
     // get selected rows of data
     const selectedData = params.api.getSelectedRows();
     // Function to generate a unique ID for each book
-    const generateId = (book: any) => `${book.bookName}-${book.authorName}`;
+    const generateId = (book: any) => `${book.bookname}-${book.authorname}`;
 
     // Generate IDs for the selected rows
     const selectedDataIDs = selectedData.map((book: any) => generateId(book));
@@ -128,17 +137,40 @@ function ManageCheckOuts() {
     // Update the state with the selected row IDs
     setSelectedRowIds(selectedDataIDs); // Assuming setRowId is your state setter function
 
-    console.log('Selection Changed', selectedDataIDs);
+
   };
 
   const handleCheckIn = (rowIds : any) => {
     if(rowIds.length <= 0) hideModal();
-    console.log(rowIds)
-    console.log('checking in ' + rowIds.toString())
-    // add logic to update the state and the db.
     
-    // change the state and decrement numcopies by 1
-    
+      
+    rowIds.forEach((rowId: any) => {
+      const bookname = rowId.split('-')[0];
+      const authorname = rowId.split('-')[1];
+
+      fetch('/api/checkings', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          bookname: bookname,
+          authorname: authorname,
+          useremail: "aaly24@amherst.edu",
+        }),
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            hideModal();
+            alert('Successfully checked in');
+            window.location.reload();
+          } else {
+            alert('Error checking in' + response.status + response.statusText);
+          }
+          return response.json();
+        });
+    });
+      
   }
 
   const modalComponent = () => (
@@ -195,30 +227,40 @@ function ManageCheckOuts() {
 
   const [rowData, setRowData] = useState([]);
   useEffect(() => {
-    fetch('../data/Mock_Checkouts.json', {
+    fetch('/api/checkings', {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Accept: 'application/json',
       },
+     
     })
       .then((response) => {
-        return response.json();
+        return response.json()
       })
       .then((data) => {
         const newData = data.map((obj: any) => {
           // Calculate the current timestamp
           const currentTimestamp = new Date().getTime();
           // Calculate the time difference in milliseconds
-          const timeDifference = currentTimestamp - obj.checkedOutSince;
+          if (obj.checkedoutsince == null) {
+            return {
+              ...obj,
+              daysCheckedOut: 0,
+            };
+          }
+          const objectTimestamp =  new Date(obj.checkedoutsince).getTime();
+          const timeDifference = currentTimestamp - objectTimestamp;
           // Convert milliseconds to days
           const daysCheckedOut = Math.floor(
             timeDifference / (1000 * 60 * 60 * 24)
           );
+            
           return {
             ...obj,
             daysCheckedOut: daysCheckedOut,
           };
         });
+
         setRowData(newData);
       });
   }, []);

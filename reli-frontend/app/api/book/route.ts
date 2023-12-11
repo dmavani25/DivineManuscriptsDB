@@ -15,8 +15,18 @@ export async function GET(req: NextRequest) {
         }
     }
 
+    // If no query parameters were provided, return all books
     if (whereClauses.length === 0) {
-        return new Response("GET request received but no query parameters provided", { status: 400 });
+        const client = await getClient();
+        try {
+            const { rows } = await client.query('SELECT * FROM public.book');
+            return Response.json(rows);
+        } catch (error) {
+            const message = (error as Error).message;
+            return new Response(message, { status: 500 });
+        } finally {
+            client.release();
+        }
     }
 
     const queryString = `SELECT * FROM public.book WHERE ${whereClauses.join(' AND ')}`;
@@ -41,7 +51,6 @@ export async function GET(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
     // USE FOR UPDATES
-    console.log("PUT request received");
     const searchParams = req.nextUrl.searchParams
 
 

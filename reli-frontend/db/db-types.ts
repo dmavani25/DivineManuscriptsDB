@@ -7,8 +7,8 @@ export interface User {
 
 export interface checkings {
     bookname: string;
-    useremail: string;
     authorname: string;
+    useremail: string;
     checkedoutsince: string | null;
 }
 

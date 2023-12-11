@@ -102,10 +102,29 @@ function BookPage() {
     setModalProperties({
       showModal: false,
     } as ModalPropsDef)
+    fetch('api/checkings', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+      body: JSON.stringify({
+        bookname: book.bookname,
+        authorname: book.authorname,
+        useremail: "aaly24@amherst.edu",
+        checkedoutsince : new Date().toISOString().slice(0, 10),
+      }),
+    })
+      .then((res) => {
+        res.json()
+        if (res.status == 200) {
+          alert("Book Checked Out Successfully")
+          window.location.reload();
+        } else {
+          alert("Book Checkout Failed. " + res.status + " " + res.statusText)
+        }
+      })
+      
 
-    // handle checkout in db
-
-    // update state.
 
   }
 
@@ -163,7 +182,7 @@ function BookPage() {
 
   const [rowData, setRowData] = useState([]);
   useEffect(() => {
-    fetch('api/book/getAllBooks')
+    fetch('api/book')
       .then((res) => res.json())
       .then((fetchedRowData) => setRowData(fetchedRowData));
   }, []);
