@@ -47,6 +47,7 @@ function ManageCheckOuts() {
   };
 
   const [columnDefs] = useState(colDefs);
+  const [selectedRowIds, setSelectedRowIds] = useState([]);
 
   const [modalProps, setModalProperties] = useState({
     showModal: false,
@@ -62,12 +63,23 @@ function ManageCheckOuts() {
     handleCancel: hideModal,
   };
 
-  function showModal(showModal: boolean, bookData: any) {
-    const newModalProperties: ModalPropsDef = {
-      ...modalProperties,
+  function showModal(showModal: boolean, bookcount: any, modalProps : ModalPropsDef = modalProperties) {
+    let newModalProperties: ModalPropsDef = {
+      ...modalProps,
       showModal: showModal,
-      dialogueText: `${modalProperties.dialogueText} ${bookData.bookName} ?`,
+      dialogueText: `${modalProps.dialogueText} ${bookcount} editions?`,
     };
+
+    if(bookcount <= 0){
+      newModalProperties = {
+        ...modalProperties,
+        showModal: showModal,
+        dialogueText: `Please select at least one book`,
+        okButton: 'OK',        
+      };
+
+    }
+    
     console.log('New modal props ' + newModalProperties.showModal);
     setModalProperties(newModalProperties);
   }
@@ -158,6 +170,34 @@ function ManageCheckOuts() {
     rowHeight: 60,
   };
 
+  const handleDelete = (rowIds : any) => {
+    if(rowIds.length <= 0) hideModal();
+    console.log(rowIds)
+    console.log('checking in ' + rowIds.toString())
+    // add logic to update the state and the db.
+    
+    // change the state and decrement numcopies by 1
+    
+  }
+
+  const onSelectedRowsChanged = (params: any) => {
+    // get selected rows of data
+    const selectedData = params.api.getSelectedRows();
+    // Function to generate a unique ID for each book
+    const generateId = (book: any) => `${book.bookname}-${book.authorname}`;
+
+    // Generate IDs for the selected rows
+    const selectedDataIDs = selectedData.map((book: any) => generateId(book));
+
+    // Update the state with the selected row IDs
+    setSelectedRowIds(selectedDataIDs); // Assuming setRowId is your state setter function
+
+    console.log('Selection Changed', selectedDataIDs);
+  };
+
+  
+
+
   return (
     <div className="h-screen flex">
       {/** Modal component */}
@@ -216,6 +256,12 @@ function ManageCheckOuts() {
               <button
                 className="mr-2 ml-2 text-[#cc5833] border border-solid border-[#cc5833] hover:bg-[#cc5833]-500 hover:text-[#ffd] hover:bg-[#cc5833] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
                 type="button"
+                onClick={()=>{
+                  showModal(true, 
+                    selectedRowIds.length,
+                    {...modalProperties, titleText : "Delete Books", dialogueText : "Are you sure you want to delete all copies of these ", okButton : "Confirm Delete", handleOk : handleDelete}
+                    )
+                }}
               >
                 <i className="fas fa-heart"></i> Delete selection
               </button>
@@ -231,10 +277,8 @@ function ManageCheckOuts() {
             rowData={rowData}
             columnDefs={columnDefs}
             defaultColDef={defaultColumnDefs}
-            context={{
-              showModal,
-            }}
             animateRows={true}
+            onSelectionChanged={onSelectedRowsChanged}
             rowSelection={'multiple'}
             suppressRowClickSelection={true}
             suppressCellFocus={true}
