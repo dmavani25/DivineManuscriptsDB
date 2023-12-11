@@ -143,6 +143,9 @@ export async function DELETE(req: NextRequest) {
             [checkings.bookname, checkings.useremail, checkings.authorname]
         ); 
 
+        if (rows.length === 0) {
+            throw new Error('Checking not found');
+        }
         // increment the number of copies of the book
         const updateResult = await client.query(
             'UPDATE book SET checkedoutcopies = checkedoutcopies + 1 WHERE bookname = $1 AND authorname = $2 RETURNING *',
