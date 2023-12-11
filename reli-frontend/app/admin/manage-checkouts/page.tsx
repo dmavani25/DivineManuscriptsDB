@@ -82,6 +82,7 @@ function ManageCheckOuts() {
   };
 
   const [columnDefs] = useState(colDefs);
+  const [selectedRowIds, setSelectedRowIds] = useState([]);
 
   const [modalProps, setModalProperties] = useState({
     showModal: false,
@@ -97,18 +98,30 @@ function ManageCheckOuts() {
     handleCancel: hideModal,
   };
 
-  function showModal(showModal: boolean, bookData: any) {
-    const newModalProperties: ModalPropsDef = {
+  function showModal(showModal: boolean, bookcount: any) {
+    let newModalProperties: ModalPropsDef = {
       ...modalProperties,
       showModal: showModal,
-      dialogueText: `${modalProperties.dialogueText} ${bookData.bookName} ?`,
+      dialogueText: `${modalProperties.dialogueText} ${bookcount} editions?`,
     };
+
+    if(bookcount <= 0){
+      newModalProperties = {
+        ...modalProperties,
+        showModal: showModal,
+        dialogueText: `Please select at least one book`,
+        okButton: 'OK',        
+      };
+
+    }
+    
     console.log('New modal props ' + newModalProperties.showModal);
     setModalProperties(newModalProperties);
   }
 
   function hideModal(showModal: boolean = false) {
     setModalProperties({ showModal: showModal } as ModalPropsDef);
+    return;
   }
 
   // Mobile sidebar visibility state
@@ -116,6 +129,31 @@ function ManageCheckOuts() {
   const handleToggle = () => {
     setShowSidebar(!showSidebar);
   };
+
+  const onSelectedRowsChanged = (params: any) => {
+    // get selected rows of data
+    const selectedData = params.api.getSelectedRows();
+    // Function to generate a unique ID for each book
+    const generateId = (book: any) => `${book.bookName}-${book.authorName}`;
+
+    // Generate IDs for the selected rows
+    const selectedDataIDs = selectedData.map((book: any) => generateId(book));
+
+    // Update the state with the selected row IDs
+    setSelectedRowIds(selectedDataIDs); // Assuming setRowId is your state setter function
+
+    console.log('Selection Changed', selectedDataIDs);
+  };
+
+  const handleCheckIn = (rowIds : any) => {
+    if(rowIds.length <= 0) hideModal();
+    console.log(rowIds)
+    console.log('checking in ' + rowIds.toString())
+    // add logic to update the state and the db.
+    
+    // change the state and decrement numcopies by 1
+    
+  }
 
   const modalComponent = () => (
     <>
@@ -154,9 +192,7 @@ function ManageCheckOuts() {
                     className="text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() =>
-                      setModalProperties({
-                        showModal: false,
-                      } as ModalPropsDef)
+                      handleCheckIn(selectedRowIds)
                     }
                   >
                     {modalProps.okButton}
@@ -258,6 +294,9 @@ function ManageCheckOuts() {
               <button
                 className="mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
                 type="button"
+                onClick={()=>{
+                  showModal(true, selectedRowIds.length)
+                }}
               >
                 <i className="fas fa-heart"></i> CheckIn selection
               </button>
@@ -273,12 +312,10 @@ function ManageCheckOuts() {
             rowData={rowData}
             columnDefs={columnDefs}
             defaultColDef={defaultColumnDefs}
-            context={{
-              showModal,
-            }}
             animateRows={true}
             rowSelection={'multiple'}
             suppressRowClickSelection={true}
+            onSelectionChanged={onSelectedRowsChanged}
             suppressCellFocus={true}
             pagination={true}
             rowHeight={60}

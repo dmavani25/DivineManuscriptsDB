@@ -21,6 +21,8 @@ function BookPage() {
     gridRef?.current?.api?.setQuickFilter(filterValue);
   }, []);
 
+  const [activeBook, setActiveBook] = useState([]);
+
   const colDefs: ColDef[] = [
     {
       headerName: 'Book Name',
@@ -86,12 +88,25 @@ function BookPage() {
       showModal: showModal,
       dialogueText : `${modalProperties.dialogueText} ${bookData.bookname} ?`
     };
+    setActiveBook(bookData);
     console.log('New modal props ' + newModalProperties.showModal);
     setModalProperties(newModalProperties);
   }
 
   function hideModal(showModal: boolean = false) {
     setModalProperties({ showModal: showModal } as ModalPropsDef);
+  }
+
+  const handleCheckout = (book : any) => {
+    console.log(book);
+    setModalProperties({
+      showModal: false,
+    } as ModalPropsDef)
+
+    // handle checkout in db
+
+    // update state.
+
   }
 
   const modalComponent = () => (
@@ -131,9 +146,7 @@ function BookPage() {
                     className="text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() =>
-                      setModalProperties({
-                        showModal: false,
-                      } as ModalPropsDef)
+                      handleCheckout(activeBook)
                     }
                   >
                     {modalProps.okButton}
@@ -152,7 +165,7 @@ function BookPage() {
   useEffect(() => {
     fetch('api/book/getAllBooks')
       .then((res) => res.json())
-      .then((rowData) => setRowData(rowData));
+      .then((fetchedRowData) => setRowData(fetchedRowData));
   }, []);
   const gridOptions = {
     suppressCellFocus: true,

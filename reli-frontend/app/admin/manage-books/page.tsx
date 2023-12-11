@@ -88,6 +88,7 @@ function ManageBooksPage() {
   };
 
   const [columnDefs] = useState(colDefs);
+  const [selectedRowIds, setSelectedRowIds] = useState([]);
 
   const [modalProps, setModalProperties] = useState({
     showModal: false,
@@ -96,19 +97,30 @@ function ManageBooksPage() {
   const modalProperties: ModalPropsDef = {
     showModal: false,
     titleText: 'Checkout Book',
-    dialogueText: 'Are you sure you want to checkout ',
+    dialogueText: 'Are you sure you want to checkout a single copy of these ',
     okButton: 'Checkout',
     cancelButton: 'Cancel',
     handleOk: hideModal,
     handleCancel: hideModal,
   };
 
-  function showModal(showModal: boolean, bookData: any) {
-    const newModalProperties: ModalPropsDef = {
-      ...modalProperties,
+  function showModal(showModal: boolean, bookcount: any, modalProps : ModalPropsDef = modalProperties) {
+    let newModalProperties: ModalPropsDef = {
+      ...modalProps,
       showModal: showModal,
-      dialogueText: `${modalProperties.dialogueText} ${bookData.bookname} ?`,
+      dialogueText: `${modalProps.dialogueText} ${bookcount} editions?`,
     };
+
+    if(bookcount <= 0){
+      newModalProperties = {
+        ...modalProperties,
+        showModal: showModal,
+        dialogueText: `Please select at least one book`,
+        okButton: 'OK',        
+      };
+
+    }
+    
     console.log('New modal props ' + newModalProperties.showModal);
     setModalProperties(newModalProperties);
   }
@@ -182,14 +194,48 @@ function ManageBooksPage() {
     fetch('../api/book/getAllBooks')
       .then((res) => res.json())
       .then((rowData) => setRowData(rowData));
-  }
-  );
+  }, []);
   
   const gridOptions = {
     suppressCellFocus: true,
     pagination: true,
     rowHeight: 60,
   };
+
+  const onSelectedRowsChanged = (params: any) => {
+    // get selected rows of data
+    const selectedData = params.api.getSelectedRows();
+    // Function to generate a unique ID for each book
+    const generateId = (book: any) => `${book.bookname}-${book.authorname}`;
+
+    // Generate IDs for the selected rows
+    const selectedDataIDs = selectedData.map((book: any) => generateId(book));
+
+    // Update the state with the selected row IDs
+    setSelectedRowIds(selectedDataIDs); // Assuming setRowId is your state setter function
+
+    console.log('Selection Changed', selectedDataIDs);
+  };
+
+  const handleCheckIn = (rowIds : any) => {
+    if(rowIds.length <= 0) hideModal();
+    console.log(rowIds)
+    console.log('checking in ' + rowIds.toString())
+    // add logic to update the state and the db.
+    
+    // change the state and decrement numcopies by 1
+    
+  }
+
+  const handleDelete = (rowIds : any) => {
+    if(rowIds.length <= 0) hideModal();
+    console.log(rowIds)
+    console.log('checking in ' + rowIds.toString())
+    // add logic to update the state and the db.
+    
+    // change the state and decrement numcopies by 1
+    
+  }
 
   return (
     <div className="h-screen flex">
@@ -251,6 +297,7 @@ function ManageBooksPage() {
               <button
                 className="mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
                 type="button"
+                onClick={()=>showModal(true, selectedRowIds.length)}
               >
                 <i className="fas fa-heart"></i> Checkout selection
               </button>
@@ -266,10 +313,8 @@ function ManageBooksPage() {
             rowData={rowData}
             columnDefs={columnDefs}
             defaultColDef={defaultColumnDefs}
-            context={{
-              showModal,
-            }}
             animateRows={true}
+            onSelectionChanged={onSelectedRowsChanged}
             rowSelection={'multiple'}
             suppressRowClickSelection={true}
             suppressCellFocus={true}
@@ -289,6 +334,12 @@ function ManageBooksPage() {
             <button
               className="text-[#cc5833] bg-transparent border border-solid border-[#cc5833] hover:bg-[#cc5833] hover:text-[#ffd] active:bg-pink-600 font-bold uppercase text-sm px-2 py-1.5 rounded outline-none focus:outline-none ease-linear transition-all duration-150"
               type="button"
+              onClick={()=>{
+                showModal(true, 
+                  selectedRowIds.length,
+                  {...modalProperties, titleText : "Delete Books", dialogueText : "Are you sure you want to delete all copies of these ", okButton : "Confirm Delete", handleOk : handleDelete}
+                  )
+              }}
             >
               Delete selection
             </button>
