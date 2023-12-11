@@ -191,9 +191,9 @@ function ManageBooksPage() {
 
   const [rowData, setRowData] = useState([]);
   useEffect(() => {
-    fetch('../api/book/getAllBooks')
+    fetch('../api/book')
       .then((res) => res.json())
-      .then((rowData) => setRowData(rowData));
+      .then((fetchedRowData) => setRowData(fetchedRowData));
   }, []);
   
   const gridOptions = {
