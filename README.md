@@ -47,11 +47,6 @@ The schema, developed in SQL, consists of three main tables: User, Book, and Che
 ### Frontend Development
 - Development of a user-friendly dashboard, integrating UI components with backend services.
 
-## Extended Goals
-- Publisher API integration for book details.
-- Single Sign-On (SSO) with Amherst emails.
-- Restricted access based on user email lists.
-
 ## Testing and Deployment
 - Comprehensive testing including CRUD operations, role-based access, and extended features.
 - Deployment on a Linux server for backend and a suitable platform for frontend.
@@ -61,7 +56,7 @@ The schema, developed in SQL, consists of three main tables: User, Book, and Che
 
 ## Project Highlights
 ### Unique Features
-- Tailored Authentication: SSO with role-based access for students, professors, and admins.
+- Tailored Authentication: Role-based access for students, professors, and admins.
 - Dynamic Book Management: Admins can manage book records and oversee checkouts.
 - Intelligent Search and Retrieval: Advanced search with an ag-Grid display for easy access to book information.
 - Enhanced Professor and Admin Interface: Specialized checkout functionalities.
@@ -69,6 +64,8 @@ The schema, developed in SQL, consists of three main tables: User, Book, and Che
 ### Future Enhancements
 - Further integration with academic databases and tools.
 - Expansion of user roles and permissions for a broader range of stakeholders.
+- Publisher API integration for book details.
+- Single Sign-On (SSO) with Amherst emails.
 
 ---
 
