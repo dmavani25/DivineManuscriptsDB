@@ -1,8 +1,6 @@
 # DivineManuscriptsDB
 
 ![Screenshot 2023-12-16 at 10 20 10 PM](https://github.com/dmavani25/DivineManuscriptsDB/assets/89651168/9953281a-7cb3-4722-a844-bbc05fe8456b)
-![Screenshot 2023-12-16 at 10 19 54 PM](https://github.com/dmavani25/DivineManuscriptsDB/assets/89651168/c14b7356-6a6b-4ff2-9f1d-aa4a48da3144)
-
 
 ## Overview
 The Divine Manuscripts DB project, spearheaded by a team of computer science students at Amherst College, aims to revolutionize the way the Religion Department manages its extensive library of religious texts. This project replaces outdated Excel sheets with a sophisticated database management system, facilitating efficient data handling and enhancing the overall library experience for faculty and staff. Below, we will go over the main components of the project very briefly. For details, please refer to the respective code, documentation, and data folders intuitively organized on this repository.
