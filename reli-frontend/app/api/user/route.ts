@@ -1,5 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { getClient, query } from 'db/db';
+import { getClient } from 'db/db';
 import { NextRequest, NextResponse } from 'next/server';
 
 
@@ -12,8 +11,6 @@ const loginInputSchema = z.object({
 
 export async function DELETE (req: NextRequest) {
     const client = await getClient();
-
-
     try {
         const input  = await req.json();
         const validatedInput = loginInputSchema.parse(input);

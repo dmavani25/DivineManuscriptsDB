@@ -66,13 +66,13 @@ export async function POST(req: Request) {
         );
 
         const updateResult = await client.query(
-            'UPDATE book SET checkedoutcopies = checkedoutcopies - 1 WHERE bookname = $1 AND authorname = $2 AND checkedoutcopies > 0 RETURNING *',
+            'UPDATE book SET checkedoutcopies = checkedoutcopies + 1 WHERE bookname = $1 AND authorname = $2 AND checkedoutcopies < numcopies RETURNING *',
             [checkings.bookname, checkings.authorname]
         );
 
-        // if (updateResult.rowCount === 0) {
-        //     throw new Error('Insufficient copies or book not found');
-        // }
+        if (updateResult.rowCount === 0) {
+            throw new Error('Insufficient copies or book not found');
+        }
 
         await client.query('COMMIT'); // Commit transaction
         
@@ -120,7 +120,7 @@ export async function PUT(req: NextRequest) {
     }
 }
 
-export async function DELETE(req: NextRequest) {
+export async function DELETE(req: Request) {
     const client = await getClient();
     try {
 
@@ -130,34 +130,35 @@ export async function DELETE(req: NextRequest) {
             checkings.authorname === '' ||
             checkings.useremail === ''
         ) {
-            return new NextResponse(
-                'bookname, useremail, authorname are required',
-                { status: 400 }
-            );
+            return new Response(JSON.stringify({ error: 'bookname, authorname, and useremail are required' }), { status: 400 });
         }
+
+
         // delete the checking
         await client.query('BEGIN'); // Start transaction
-
+        console.log( checkings.authorname)
+        console.log( checkings.bookname)
         const { rows } = await client.query(
-            'DELETE FROM checkings WHERE bookname = $1 AND useremail = $2 AND authorname = $3 RETURNING *',
+            `DELETE FROM checkings WHERE bookname = $1 AND useremail = $2 AND authorname = $3 RETURNING *`,
             [checkings.bookname, checkings.useremail, checkings.authorname]
         ); 
 
         if (rows.length === 0) {
             throw new Error('Checking not found');
         }
+        
         // increment the number of copies of the book
         const updateResult = await client.query(
-            'UPDATE book SET checkedoutcopies = checkedoutcopies + 1 WHERE bookname = $1 AND authorname = $2 RETURNING *',
+            `UPDATE book SET checkedoutcopies = checkedoutcopies - 1 WHERE bookname = $1 AND authorname = $2 AND checkedoutcopies > 0 RETURNING *`,
             [checkings.bookname, checkings.authorname]
         );
 
         await client.query('COMMIT'); // Commit transaction
         
-        return NextResponse.json({ message: 'Checking deleted successfully' }, {status:200});
+        return new Response(JSON.stringify({ message: 'Checking deleted successfully' }), { status: 200 });
     } catch (error) {
-        return new NextResponse('Failed to delete checking', { status: 500 });
-    } finally {
+            return new Response(JSON.stringify({ error: 'Failed to delete checking' }), { status: 500 });
+        } finally {
         client.release();
     }
 }

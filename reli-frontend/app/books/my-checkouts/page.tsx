@@ -120,7 +120,7 @@ function ManageCheckOuts() {
     setModalProperties(newModalProperties);
   }
 
-  function hideModal(showModal: boolean = false) {
+  function hideModal(showModal = false) {
     setModalProperties({ showModal: showModal } as ModalPropsDef);
     return;
   }
@@ -129,7 +129,9 @@ function ManageCheckOuts() {
     // get selected rows of data
     const selectedData = params.api.getSelectedRows();
     // Function to generate a unique ID for each book
-    const generateId = (book: any) => `${book.bookname}-${book.authorname}`;
+    const generateId = (book: any) => {
+      return `${book.bookname}_${book.authorname}`;
+    } ;
 
     // Generate IDs for the selected rows
     const selectedDataIDs = selectedData.map((book: any) => generateId(book));
@@ -145,8 +147,9 @@ function ManageCheckOuts() {
     
       
     rowIds.forEach((rowId: any) => {
-      const bookname = rowId.split('-')[0];
-      const authorname = rowId.split('-')[1];
+      const bookname = rowId.split('_')[0];
+      const authorname = rowId.split('_')[1];
+
 
       fetch('/api/checkings', {
         method: 'DELETE',

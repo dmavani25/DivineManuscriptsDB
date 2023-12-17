@@ -23,7 +23,6 @@ export const login = async (input: any) => {
             `SELECT hashedpassword, role FROM "User" WHERE email = $1`,
             [validatedInput.email]
         );
-
         const user = res.rows[0];
         if (!user) {
             throw new Error('User not found');
@@ -34,7 +33,6 @@ export const login = async (input: any) => {
         if (!isValid) {
             throw new Error('Invalid password');
         }
-
         // Return the success response
         return { success: true, email: validatedInput.email, role: user.role, message: 'Login successful' };
     } catch (error) {
@@ -51,7 +49,6 @@ export async function POST(req: Request) {
         // Get and parse the input from the request body
         const input = await req.json();
         const result = await login(input);
-
         // Return a success response
         return new Response(JSON.stringify(result), { status: 200 });
     } catch (error) {
