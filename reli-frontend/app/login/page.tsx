@@ -15,7 +15,7 @@ const Login = () => {
     try {
     
       await signIn('credentials', { ...formData, redirect: false }); 
-      router.push('/');
+      router.replace('/');
     } catch (error) {
       if (error instanceof AuthError) {
         switch (error.type) {
