@@ -69,6 +69,15 @@ The schema, developed in SQL, consists of three main tables: User, Book, and Che
 - Publisher API integration for book details.
 - Single Sign-On (SSO) with Amherst emails.
 
+## Example Views
+![dmdb_login](https://github.com/dmavani25/DivineManuscriptsDB/assets/89651168/996c9a54-e244-4b07-bbc2-a955bbfc586b)
+![dmdb_admin_manage_books](https://github.com/dmavani25/DivineManuscriptsDB/assets/89651168/1748cb98-1c6f-4353-91b7-6007f4646675)
+![dmdb_admin_manage_users](https://github.com/dmavani25/DivineManuscriptsDB/assets/89651168/f4d1d53f-e589-4d53-a6d8-c2958eeb9243)
+![dmdb_admin_manage_checkouts](https://github.com/dmavani25/DivineManuscriptsDB/assets/89651168/c1e48126-1e9c-4095-b763-dc06d80e73ef)
+![dmdb_prof_books](https://github.com/dmavani25/DivineManuscriptsDB/assets/89651168/aa337844-e527-4ad9-b393-0984d613ffa2)
+![dmdb_prof_my_checkouts](https://github.com/dmavani25/DivineManuscriptsDB/assets/89651168/55f73450-639c-4c70-b35d-4e29d0e31677)
+
+
 ---
 
 For more information or to contribute to this project, contact [Dhyey Mavani](mailto:dmavani25@amherst.edu), [Brandon Ngacho](mailto:bngacho24@amherst.edu), [Ahmed Aly](mailto:aaly24@amherst.edu), [Ahsan Randhawa](mailto:mtahir24@amherst.edu), or [Professor Matteo Riondato](mailto:mriondato@amherst.edu)!
