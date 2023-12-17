@@ -4,6 +4,7 @@ import Navbar from 'app/nav-bar/Navbar';
 import React, { useState } from 'react';
 import { AuthError } from 'next-auth';
 import { signIn } from 'auth';
+import { redirect } from 'next/navigation';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ const Login = () => {
 
   const authenticate = async (formData: any) => {
     try {
-      await signIn('credentials', formData);
+      const user = await signIn('credentials', formData);
     } catch (error) {
       if (error instanceof AuthError) {
         switch (error.type) {
@@ -54,7 +55,7 @@ const Login = () => {
           </p>
 
           {/* Display error message if there is one */}
-          {error && <div className="text-red-500 text-center">{error}</div>}
+          {error && <div className="text-[#ff3333] text-center">{error}</div>}
 
           <form onSubmit={handleSubmit}>
             <div className="mt-4">

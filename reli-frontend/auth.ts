@@ -1,18 +1,29 @@
+"use server"
+
 import NextAuth from 'next-auth';
 import { authConfig } from './auth.config';
 import Credentials from 'next-auth/providers/credentials';
 import { z } from 'zod';
-import bcrypt from "bcryptjs-react";
-import { query } from 'db/db';
+import { User } from 'db/db-types';
 
-async function getUser(email: string): Promise<any | undefined> {
+async function postData(url = '', data = {}) {
   try {
-    // const { rows } = await query(`SELECT * FROM public.user where email = ${email}`);
-    // console.log("row count : " + rows.length);
-    return null;
+      const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      });
+      const res = await response.json();
+      const user: User = {
+        email: res.email,
+        role: res.role,
+      }
+      return user; 
   } catch (error) {
-    console.error('Failed to fetch user:', error);
-    throw new Error('Failed to fetch user.');
+      return null;
   }
 }
 
@@ -25,17 +36,18 @@ export const { auth, signIn, signOut } = NextAuth({
           .object({ email: z.string().email(), password: z.string().min(6) })
           .safeParse(credentials);
 
-          if (parsedCredentials.success) {
-            const { email, password } = parsedCredentials.data;
-            const user = await getUser(email);
-            if (!user) return null;
-            const passwordsMatch = await bcrypt.compare(password, user.password);
-   
-            if (passwordsMatch) return user;
-          }
-   
-          console.log('Invalid credentials');
+        if (parsedCredentials.success) {
+          const { email, password } = parsedCredentials.data;
+          const user = await fetch('http://localhost:4200/api/login', {
+            method: 'POST',
+            body: JSON.stringify({ email, password }),
+            headers: { 'Content-Type': 'application/json' },
+          });
+          return user;
+        }else{
           return null;
+
+        }
       },
     }),
   ],
