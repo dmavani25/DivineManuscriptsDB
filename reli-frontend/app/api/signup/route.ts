@@ -16,25 +16,24 @@ const signupInputSchema = z.object({
 export const signup = async (input: any) => {
   // Validate the input using the schema
   const validatedInput = signupInputSchema.parse(input);
-
   // Access the database using pgclient's useClient
   const client = await getClient();
-
+  // salt should be the user's email
+  const salt = await bcrypt.hash(validatedInput.email, 5);
   // hash the password
-    const hashedPassword = await bcrypt.hash(validatedInput.password, 10);
-
+  const hashedPassword = await bcrypt.hash(validatedInput.password, salt );
+  const role: string = getRole(validatedInput.email);
   try {
     // first make a new user in the users table with the email since it is unique
     await client.query(
-      `INSERT INTO "Users" (email, password) VALUES ($1, $2) RETURNING email`,
-      [validatedInput.email, hashedPassword]
+      `INSERT INTO "User" (email, role, hashedpassword) VALUES ($1, $2, $3) RETURNING email`,
+      [validatedInput.email, role, hashedPassword]
     );
 
     // Return the result
-    return { success: true, message: 'Signup successful' };
+    return { success: true, "role": role, message: 'Signup successful' };
   } catch (error) {
     // Handle any errors
-    console.error('Signup error:', error);
     throw new Error('Signup failed');
   } finally {
     // Release the database client
@@ -45,17 +44,30 @@ export const signup = async (input: any) => {
 
 export async function POST(req: Request) {
     try {
-        console.log("POST");
         // Get and parse the input from the request body
         // Call the signup function with the input
         const input = await req.json();
         const result = await signup(input);
-        
-        
-        // Return the result with a success status code
-        return new Response(JSON.stringify(result), { status: 201 });
+        // Return a success response
+        return new Response(JSON.stringify(result), { status: 200 });
+
+
+      
     } catch (error) {
         // Return an error response
         return new Response(JSON.stringify({ error: "failed to signup" }), { status: 400 });
     }
+}
+
+
+function getRole(email: string) {
+  if (email === "religion.amherst.edu") {
+    return "admin";
+    // else if email has a number in it in the last two digits before @ then it is a student
+  } else if (email.match(/\d{2}@/)) {
+    return "student";
+  } else {
+    return "faculty";
+  }
+
 }
