@@ -4,16 +4,18 @@ import Navbar from 'app/nav-bar/Navbar';
 import React, { useState } from 'react';
 import { AuthError } from 'next-auth';
 import { signIn } from 'auth';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-
+  const router = useRouter();
   const authenticate = async (formData: any) => {
     try {
-      const user = await signIn('credentials', formData);
+    
+      await signIn('credentials', { ...formData, redirect: false }); 
+      router.push('/');
     } catch (error) {
       if (error instanceof AuthError) {
         switch (error.type) {
