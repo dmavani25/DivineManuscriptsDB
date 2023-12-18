@@ -252,13 +252,28 @@ function ManageCheckOuts() {
                 className="shadow appearance border border-primary rounded p-1 focus:outline-none focus:shadow-outline"
               />
               <button
+                className="mr-2 ml-2 text-[#458246] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#458246] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
+                type="button"
+              >
+                <a
+                  href="/admin/create-account"
+                  className="text-sm text-[#458246] hover:underline"
+                >
+                  Add User
+                </a>
+              </button>
+              <button
                 className="mr-2 ml-2 text-[#cc5833] border border-solid border-[#cc5833] hover:bg-[#cc5833]-500 hover:text-[#ffd] hover:bg-[#cc5833] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
                 type="button"
-                onClick={()=>{
-                  showModal(true, 
-                    selectedRowIds.length,
-                    {...modalProperties, titleText : "Delete Books", dialogueText : "Are you sure you want to delete all copies of these ", okButton : "Confirm Delete", handleOk : handleDelete}
-                    )
+                onClick={() => {
+                  showModal(true, selectedRowIds.length, {
+                    ...modalProperties,
+                    titleText: 'Delete Books',
+                    dialogueText:
+                      'Are you sure you want to delete all copies of these ',
+                    okButton: 'Confirm Delete',
+                    handleOk: handleDelete,
+                  });
                 }}
               >
                 <i className="fas fa-heart"></i> Delete selection
