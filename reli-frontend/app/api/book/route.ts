@@ -108,22 +108,41 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest){
-    const searchParams = req.nextUrl.searchParams
-    const bookname = searchParams.get('bookname');
-    const authorname = searchParams.get('authorname');
+    const deleteData = await req.json();
+    const booksArray =  deleteData?.['bookArray'] || [];
+
+    let booksAndAuthors = booksArray.map((item: string) => {
+      let [bookName, authorName] = item.split('<--->');
+      return { bookName, authorName };
+    });
+
+    if (booksAndAuthors.length === 0) {
+        throw new Error("DELETE request received but no books provided");
+    }
+
+    let valuesString = booksAndAuthors
+      .map(({ bookName, authorName }: any) => {
+        return `($1, $2)`;
+      })
+      .join(',');
+
+    let valuesArray = [].concat(
+      ...booksAndAuthors.map(({ bookName, authorName }: any) => {
+        return [bookName, authorName];
+      })
+    );
+
+    const queryText = ` DELETE FROM public.book AS books
+        USING (VALUES ${valuesString}) AS v(book_name, author_name)
+        WHERE books.bookname = v.book_name AND books.authorname = v.author_name;`;
+    
     const client = await getClient();
 
-    if (bookname === '') {
-        return new Response("DELETE request received but bookname is empty", { status: 200 });
-    }
-    if (authorname === '') {
-        return new Response("DELETE request received but authorname is empty", { status: 200 });
-    }
-
     try {
-        const rows = await client.query(`DELETE FROM public.book WHERE bookname = $1 AND authorname = $2`, [bookname, authorname]);
+        const rows = await client.query(queryText);
+        console.log(rows);
         if (rows.rowCount === 0) {
-            return new Response("DELETE request received but book does not exist", { status: 200 });
+            throw new Error("Book does not exist");
         }
         else {
             return new Response("DELETE request received and book deleted", { status: 201 });

@@ -7,10 +7,11 @@ import Navbar from 'app/nav-bar/Navbar';
 import { useRef, useCallback, useState, useEffect } from 'react';
 import Sidebar from 'app/custom-components/side-bar/admin/Sidebar';
 import { book } from 'db/db-types';
-import { url } from 'inspector';
+import { useRouter } from 'next/navigation';
 
 function ManageBooksPage() {
   const gridRef = useRef<any>(null);
+  const router = useRouter();
 
   const onFilterTextBoxChanged = useCallback(() => {
     const filterValue = (
@@ -176,7 +177,7 @@ function ManageBooksPage() {
   const [wing, setWingLocation] = useState('');
   const [numberOfCopies, setNumberOfCopies] = useState('');
 
-  async function postBook(url = '../api/book', method : string, data : book) {
+  async function postBook(url = '../api/book', method : string, data : any) {
     try {
         const response = await fetch(url, {
             method: method,
@@ -199,6 +200,8 @@ function ManageBooksPage() {
     }
   }
 
+
+
   async function handleEditBookData(book: book) {
     try { 
 
@@ -220,6 +223,39 @@ function ManageBooksPage() {
       return false;
       
     }
+  }
+
+  const handleDeleteBooks  = (rowIds: any) => {
+    if (rowIds.length <= 0) hideModal();
+
+    const books = {
+      bookArray : rowIds
+    }
+
+    postBook('../api/book', 'DELETE', books).then(
+      (res) => {
+        hideModal();
+        router.refresh();
+
+        
+      }
+    ).catch((err) => {
+      const errModalProperties: ModalPropsDef = {
+        showModal: true,
+        titleText: 'An Error Occured While Deleting this Selection',
+        dialogueText: 'If Issue Persists Contact IT ',
+        okButton: 'OK',
+        cancelButton: '',
+        handleOk: hideModal,
+        handleCancel: hideModal,
+      };
+      // change Modal Properties
+      setModalProperties(errModalProperties);
+
+    })
+
+    
+
   }
 
   const handleAddBook = (e: any) => {
@@ -386,7 +422,7 @@ function ManageBooksPage() {
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-2 border-blueGray-200 rounded-b">
-                  {modalProps.okButton && <button
+                  {modalProps.cancelButton && <button
                     className="text-[#cc5833] bg-transparent border border-solid border-[#cc5833] hover:bg-[#cc5833] hover:text-[#ffd] active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() =>
@@ -397,13 +433,21 @@ function ManageBooksPage() {
                   >
                     {modalProps.cancelButton}
                   </button>}
-                  {modalProps.cancelButton && <button
+                  {modalProps.okButton && <button
                     className="text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
-                    onClick={() =>
-                      setModalProperties({
-                        showModal: false,
-                      } as ModalPropsDef)
+                    onClick={() =>{
+                      if(modalProps.okButton == 'Confirm Delete'){
+                        handleDeleteBooks(selectedRowIds)
+                      }else{
+                        setModalProperties({
+                          showModal: false,
+                        } as ModalPropsDef)
+                      }
+
+                    }
+                      
+                      
                     }
                   >
                     {modalProps.okButton}
@@ -435,7 +479,7 @@ function ManageBooksPage() {
     // get selected rows of data
     const selectedData = params.api.getSelectedRows();
     // Function to generate a unique ID for each book
-    const generateId = (book: any) => `${book.bookname}-${book.authorname}`;
+    const generateId = (book: any) => `${book.bookname}<--->${book.authorname}`;
 
     // Generate IDs for the selected rows
     const selectedDataIDs = selectedData.map((book: any) => generateId(book));
@@ -574,7 +618,7 @@ function ManageBooksPage() {
                   dialogueText:
                     'Are you sure you want to delete all copies of these ',
                   okButton: 'Confirm Delete',
-                  handleOk: handleDelete,
+                  handleOk: handleDeleteBooks,
                 });
               }}
             >
