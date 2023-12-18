@@ -51,24 +51,34 @@ export async function GET(req: NextRequest) {
 
 export async function PUT(req: NextRequest) {
     // USE FOR UPDATES
-    const searchParams = req.nextUrl.searchParams
+    const bookBody = await req.json();
 
+    const bookname = bookBody?.['bookname'] || '';
+    const authorname = bookBody?.['authorname'] || '';
+    const religion = bookBody?.['religion'] || '';
+    const shelf = bookBody?.['shelf'] || '';
+    const wing = bookBody?.['wing'] || '';
+    const numcopies = bookBody?.['numcopies'] || '1';
+    const checkedoutcopies = bookBody?.['checkedoutcopies'] || '0';
+
+
+    console.log(bookBody);
 
     const book: book = {
-        bookname: searchParams.get('bookname') || '' ,
-        authorname: searchParams.get('authorname') || '' ,
-        religion: searchParams.get('religion') || '',
-        shelf: searchParams.get('shelf') || '',
-        wing: searchParams.get('wing') || '',
-        numcopies: parseInt(searchParams.get('numcopies') || '1'),
-        checkedoutcopies: parseInt(searchParams.get('checkedoutcopies') || '0')
+        bookname: bookname,
+        authorname: authorname,
+        religion: religion,
+        shelf: shelf,
+        wing: wing,
+        numcopies: parseInt(numcopies),
+        checkedoutcopies: parseInt(checkedoutcopies)
     };
 
     if (book.bookname === '') {
-        return new Response("PUT request received but bookname is empty", { status: 200 });
+        throw new Error("Bookname is empty");
     }
     if (book.authorname === '') {
-        return new Response("PUT request received but authorname is empty", { status: 200 });
+        throw new Error("Authorname is empty");
     }
     
     const client = await getClient();
@@ -84,10 +94,10 @@ export async function PUT(req: NextRequest) {
             book.checkedoutcopies
         ]);
         if (rows.rowCount === 0) {
-            return new Response("PUT request received but book does not exist", { status: 200 });
+            throw new Error("Book does not exist"); 
         }
         else {
-            return new Response("PUT request received and book updated", { status: 201 });
+            return new Response("PUT request received and book updated", { status: 200 });
         }
     } catch (error) {
         const message = (error as Error).message;
