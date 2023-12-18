@@ -94,6 +94,7 @@ function ManageBooksPage() {
     showModal: false,
   } as ModalPropsDef);
   const [showBookModal, toggleAddBookModal] = useState(false);
+  const [addBookError, setAddBookError] = useState('');
 
   const modalProperties: ModalPropsDef = {
     showModal: false,
@@ -171,6 +172,9 @@ function ManageBooksPage() {
             >
               <h2 className="text-2xl mb-4">Book Information</h2>
 
+              {/* Display error message if there is one */}
+              {addBookError && <div className="text-[#ff3333] text-center">{addBookError}</div>}
+
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
                   Book Name
@@ -231,7 +235,7 @@ function ManageBooksPage() {
                 <input
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:border-[#F56630]"
                   type="text"
-                  placeholder="Enter Wing the Book is In"
+                  placeholder="Enter Book Location"
                   value={wing}
                   onChange={(e) => setWingLocation(e.target.value)}
                 />
