@@ -1,7 +1,5 @@
 'use client';
 import Sidebar from 'app/custom-components/side-bar/admin/Sidebar';
-import Navbar from 'app/nav-bar/Navbar';
-import { User } from 'db/db-types';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
@@ -123,7 +121,7 @@ const SignUp = () => {
                   data-ripple-light="true"
                   className="mb-2 block w-full text-primary border border-solid border-primary rounded px-6 pb-2 pt-2.5 text-s font-medium leading-normal transition duration-150 ease-in-out hover:bg-primary hover:text-[#fff] focus:bg-primary-600 focus:outline-none active:bg-primary-700 "
                 >
-                  Sign Up
+                  Create New User
                 </button>
               </div>
             </div>
