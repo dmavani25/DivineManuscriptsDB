@@ -3,8 +3,6 @@ import { ColDef } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import ModalPopUpCellRenderer from 'app/custom-components/modal/ModalPopUpCellRenderer';
-import Navbar from 'app/nav-bar/Navbar';
 import { useRef, useCallback, useState, useEffect } from 'react';
 import Sidebar from 'app/custom-components/side-bar/admin/Sidebar';
 
@@ -150,7 +148,7 @@ function ManageCheckOuts() {
 
   const [rowData, setRowData] = useState([]);
   useEffect(() => {
-    fetch('../data/Mock_User.json', {
+    fetch('../api/user', {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
@@ -243,7 +241,7 @@ function ManageCheckOuts() {
         <div className="mt-24 w-4/5 mx-auto">
           <div className="flex justify-between">
             <div className="text-2lg text-primary p-1 font-bold">
-              Checked Out Books
+              Registered Users
             </div>
             <div className="flex items-center justify-center">
               <input

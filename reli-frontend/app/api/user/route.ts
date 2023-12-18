@@ -9,6 +9,24 @@ const loginInputSchema = z.object({
     email: z.string().email(),
 });
 
+export async function GET(req: NextRequest) {
+    const client = await getClient();
+    try {
+        const { rows } = await client.query('SELECT * FROM "User"');
+        if (rows.length === 0) {
+            throw new Error("No users found");
+        }
+        
+        return Response.json(rows);
+    } catch (error) {
+        const message = (error as Error).message;
+        return new Response(message, { status: 500 });
+    } finally {
+        client.release();
+    }
+    
+}
+
 export async function DELETE (req: NextRequest) {
     const client = await getClient();
     try {
