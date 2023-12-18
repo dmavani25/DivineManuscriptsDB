@@ -122,9 +122,11 @@ export async function DELETE(req: NextRequest){
 
     let valuesString = booksAndAuthors
       .map(({ bookName, authorName }: any) => {
-        return `($1, $2)`;
+        return `(${bookName}, ${authorName})`;
       })
       .join(',');
+
+      console.log(valuesString);
 
     let valuesArray = [].concat(
       ...booksAndAuthors.map(({ bookName, authorName }: any) => {
@@ -133,8 +135,8 @@ export async function DELETE(req: NextRequest){
     );
 
     const queryText = ` DELETE FROM public.book AS books
-        USING (VALUES ${valuesString}) AS v(book_name, author_name)
-        WHERE books.bookname = v.book_name AND books.authorname = v.author_name;`;
+        USING VALUES ${valuesString} AS v(book_name, author_name)
+        WHERE books.bookname = v.book_name AND books.authorname = v.author_name`;
     
     const client = await getClient();
 
@@ -142,9 +144,11 @@ export async function DELETE(req: NextRequest){
         const rows = await client.query(queryText);
         console.log(rows);
         if (rows.rowCount === 0) {
+            console.log("Book does not exist");
             throw new Error("Book does not exist");
         }
         else {
+            console.log("DELETE request received and book deleted");
             return new Response("DELETE request received and book deleted", { status: 201 });
         }
     }
