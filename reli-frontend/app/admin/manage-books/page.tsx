@@ -27,55 +27,82 @@ function ManageBooksPage() {
       headerCheckboxSelection: true,
       checkboxSelection: true,
       showDisabledCheckboxes: true,
-      editable: true,
-      valueSetter: (params) => {
-        const newVal = params.newValue;
-        const valueChanged = params.data.bookname !== newVal;
-        if (valueChanged) {
-          console.log('Value changed ' + newVal);
-          params.data.bookname = newVal;
-        }
-        return valueChanged;
-      },
+      editable: false,
     },
     {
       headerName: 'Author Name',
       field: 'authorname',
       filter: 'agTextColumnFilter',
-      editable: true,
-      valueSetter: (params) => {
-        const newVal = params.newValue;
-        const valueChanged = params.data.authorname !== newVal;
-        if (valueChanged) {
-          console.log('Value changed ' + newVal);
-          params.data.authorname = newVal;
-        }
-        return valueChanged;
-      },
+      editable: false,
     },
     {
       headerName: 'Num Copies',
       field: 'numcopies',
       filter: 'agNumberColumnFilter',
       editable: true,
+      valueSetter: (params) => {
+        const oldData = params.data;
+        const newVal = params.newValue;
+        const valueChanged = params.data.numcopies !== newVal;
+        if (!valueChanged) return false; 
+        handleEditBookData({...oldData, numcopies : newVal}).then((_)=>{
+          console.log('Value changed ' + newVal);
+          params.data.numcopies = newVal;
+        })
+        return true;
+      },
+      
     },
     {
       headerName: 'Religion',
       field: 'religion',
       filter: 'agTextColumnFilter',
       editable: true,
+      valueSetter: (params) => {
+        const oldData = params.data;
+        const newVal = params.newValue;
+        const valueChanged = params.data.religion !== newVal;
+        if (!valueChanged) return false; 
+        handleEditBookData({...oldData, religion : newVal}).then((_)=>{
+          console.log('Value changed ' + newVal);
+          params.data.religion = newVal;
+        })
+        return true;
+      },
     },
     {
       headerName: 'Wing',
       field: 'wing',
       filter: 'agTextColumnFilter',
       editable: true,
+      valueSetter: (params) => {
+        const oldData = params.data;
+        const newVal = params.newValue;
+        const valueChanged = params.data.wing !== newVal;
+        if (!valueChanged) return false; 
+        handleEditBookData({...oldData, wing : newVal}).then((_)=>{
+          console.log('Value changed ' + newVal);
+          params.data.wing = newVal;
+        })
+        return true;
+      },
     },
     {
       headerName: 'Shelf',
       field: 'shelf',
       filter: 'agNumberColumnFilter',
       editable: true,
+      valueSetter: (params) => {
+        const oldData = params.data;
+        const newVal = params.newValue;
+        const valueChanged = params.data.shelf !== newVal;
+        if (!valueChanged) return false; 
+        handleEditBookData({...oldData, shelf : newVal}).then((_)=>{
+          console.log('Value changed ' + newVal);
+          params.data.shelf = newVal;
+        })
+        return true;
+      },
     },
   ];
 
@@ -145,13 +172,14 @@ function ManageBooksPage() {
   const [bookName, setBookName] = useState('');
   const [authorName, setAuthorName] = useState('');
   const [shelfNumber, setShelfNumber] = useState('');
+  const [religionName, setReligionName] = useState('');
   const [wing, setWingLocation] = useState('');
   const [numberOfCopies, setNumberOfCopies] = useState('');
 
-  async function postBook(url = '../api/book', data : book) {
+  async function postBook(url = '../api/book', method : string, data : book) {
     try {
         const response = await fetch(url, {
-            method: 'POST',
+            method: method,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -171,6 +199,29 @@ function ManageBooksPage() {
     }
   }
 
+  async function handleEditBookData(book: book) {
+    try { 
+
+      const res = await postBook('../api/book', 'PUT', book)
+      return true;
+    } catch (error) {
+      const errModalProperties: ModalPropsDef = {
+        showModal: true,
+        titleText: 'An Error Occured While Editing this book',
+        dialogueText: 'If Issue Persists Contact IT ',
+        okButton: 'OK',
+        cancelButton: '',
+        handleOk: hideModal,
+        handleCancel: hideModal,
+      };
+      // change Modal Properties
+      setModalProperties(errModalProperties);
+
+      return false;
+      
+    }
+  }
+
   const handleAddBook = (e: any) => {
     setAddBookError('');
     e.preventDefault();
@@ -178,12 +229,13 @@ function ManageBooksPage() {
       bookname: bookName,
       authorname: authorName,
       shelf: shelfNumber,
+      religion : religionName,
       wing: wing,
       numcopies: Number(numberOfCopies),
     };
 
     console.log(book);
-    postBook('../api/book', book).then(
+    postBook('../api/book', 'POST', book).then(
       (res) => {
         setAddBookSuccess("Book Successfully Added");
         toggleAddBookModal(false);
@@ -205,7 +257,7 @@ function ManageBooksPage() {
               onSubmit={handleAddBook}
               className="p-8 rounded bg-[#fff] shadow-md outline outline-1"
             >
-              <h2 className="text-2xl mb-4">Book Information</h2>
+              <h2 className="text-2xl mb-4">New Book Information</h2>
 
               {/* Display error message if there is one */}
               {addBookError && <div className="text-[#ff3333] text-center">{addBookError}</div>}
@@ -234,6 +286,19 @@ function ManageBooksPage() {
                   placeholder="Enter author name"
                   value={authorName}
                   onChange={(e) => setAuthorName(e.target.value)}
+                />
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Religion
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:border-[#F56630]"
+                  type="text"
+                  placeholder="Enter Religion this Book Belongs to"
+                  value={religionName}
+                  onChange={(e) => setReligionName(e.target.value)}
                 />
               </div>
 
@@ -321,7 +386,7 @@ function ManageBooksPage() {
                 </div>
                 {/*footer*/}
                 <div className="flex items-center justify-end p-2 border-blueGray-200 rounded-b">
-                  <button
+                  {modalProps.okButton && <button
                     className="text-[#cc5833] bg-transparent border border-solid border-[#cc5833] hover:bg-[#cc5833] hover:text-[#ffd] active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() =>
@@ -331,8 +396,8 @@ function ManageBooksPage() {
                     }
                   >
                     {modalProps.cancelButton}
-                  </button>
-                  <button
+                  </button>}
+                  {modalProps.cancelButton && <button
                     className="text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold uppercase text-sm px-6 py-3 rounded outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() =>
@@ -342,7 +407,7 @@ function ManageBooksPage() {
                     }
                   >
                     {modalProps.okButton}
-                  </button>
+                  </button>}
                 </div>
               </div>
             </div>
