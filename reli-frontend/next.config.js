@@ -22,6 +22,11 @@ const nextConfig = {
 
     return config;
   },
+  experimental: {
+    serverActions: {
+      allowedOrigins: ['cosc-257-node10.cs.amherst.edu'],
+    },
+  },
 };
 
 const plugins = [
