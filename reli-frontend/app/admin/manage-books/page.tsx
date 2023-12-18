@@ -6,6 +6,7 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import Navbar from 'app/nav-bar/Navbar';
 import { useRef, useCallback, useState, useEffect } from 'react';
 import Sidebar from 'app/custom-components/side-bar/admin/Sidebar';
+import { book } from 'db/db-types';
 
 function ManageBooksPage() {
   const gridRef = useRef<any>(null);
@@ -92,6 +93,7 @@ function ManageBooksPage() {
   const [modalProps, setModalProperties] = useState({
     showModal: false,
   } as ModalPropsDef);
+  const [showBookModal, toggleAddBookModal] = useState(false);
 
   const modalProperties: ModalPropsDef = {
     showModal: false,
@@ -103,47 +105,26 @@ function ManageBooksPage() {
     handleCancel: hideModal,
   };
 
-  const bookModalProperties: ModalPropsDef = {
-    showModal: false,
-    titleText: 'Add Book',
-    dialogueText: '',
-    okButton: 'Add Book',
-    cancelButton: 'Cancel',
-    handleOk: hideModal,
-    handleCancel: hideModal,
-  };
-
-
-  function setBookInfoModal(showModal: boolean, modalProps : ModalPropsDef = bookModalProperties){
-    if(!showModal){
-      setModalProperties({ showModal: showModal } as ModalPropsDef);
-      return;
-    } 
-
-    setModalProperties({ showModal: showModal } as ModalPropsDef);
-
-
-
-
-  }
-
-  function showModal(showModal: boolean, bookcount: any, modalProps : ModalPropsDef = modalProperties) {
+  function showModal(
+    showModal: boolean,
+    bookcount: any,
+    modalProps: ModalPropsDef = modalProperties
+  ) {
     let newModalProperties: ModalPropsDef = {
       ...modalProps,
       showModal: showModal,
       dialogueText: `${modalProps.dialogueText} ${bookcount} editions?`,
     };
 
-    if(bookcount <= 0){
+    if (bookcount <= 0) {
       newModalProperties = {
         ...modalProperties,
         showModal: showModal,
         dialogueText: `Please select at least one book`,
-        okButton: 'OK',        
+        okButton: 'OK',
       };
-
     }
-    
+
     console.log('New modal props ' + newModalProperties.showModal);
     setModalProperties(newModalProperties);
   }
@@ -158,101 +139,125 @@ function ManageBooksPage() {
     setShowSidebar(!showSidebar);
   };
 
+  const [bookName, setBookName] = useState('');
+  const [authorName, setAuthorName] = useState('');
+  const [shelfNumber, setShelfNumber] = useState('');
+  const [wing, setWingLocation] = useState('');
+  const [numberOfCopies, setNumberOfCopies] = useState('');
 
-  const handleAddBook = (book : any) => {
+  const handleAddBook = (e: any) => {
+    e.preventDefault();
+    const book: book = {
+      bookname: bookName,
+      authorname: authorName,
+      shelf: shelfNumber,
+      wing: wing,
+      numcopies: Number(numberOfCopies),
+    };
+
     console.log(book);
-    setModalProperties({
-      showModal: false,
-    } as ModalPropsDef)
-    fetch('api/book', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'text/plain',
-      },
-      body: JSON.stringify({
-        bookname: JSON.stringify(book.bookname),
-        authorname: JSON.stringify(book.authorname),
-        useremail: "aaly24@amherst.edu",
-        checkedoutsince : new Date().toISOString().slice(0, 10),
-      }),
-    })
-      .then((res) => {
-        res.json()
-        if (res.status == 200) {
-          alert("Book Checked Out Successfully")
-          window.location.reload();
-        } else {
-          alert("Book Checkout Failed. " + res.status + " " + res.statusText)
-        }
-      })
-      
 
+    // toggle add book Props
+  };
 
-  }
-
-
-  const addBookModalComponent = () => {
+  const BookModalComponent = () => (
     <>
-      {modalProps.showModal ? (
+      {showBookModal ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="rounded-md relative w-1/3 my-auto mx-auto max-w-3xl">
-              {/* content */}
-              <div className="border-0 p-2 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline outline-1 focus:outline-none">
-                {/* header */}
-                <div className="flex items-start justify-between p-3 border-primary-200 rounded-t">
-                  <h3 className="text-lg font-semibold">
-                    Add New Book
-                  </h3>
-                  <button
-                    className="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
-                    onClick={() => setBookInfoModal(false)}
-                  >
-                    <span className="bg-transparent text-black h-6 w-6 text-2xl block outline-none focus:outline-none">
-                      ×
-                    </span>
-                  </button>
+            <form
+              onSubmit={handleAddBook}
+              className="p-8 rounded bg-[#fff] shadow-md outline outline-1"
+            >
+              <h2 className="text-2xl mb-4">Book Information</h2>
+
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Book Name
+                </label>
+                <input
+                  className="shadow appearance-none border border-gray rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:border-[#F56630]"
+                  type="text"
+                  placeholder="Enter book name"
+                  value={bookName}
+                  onChange={(e) => setBookName(e.target.value)}
+                />
+              </div>
+
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Author Name
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:border-[#F56630]"
+                  type="text"
+                  placeholder="Enter author name"
+                  value={authorName}
+                  onChange={(e) => setAuthorName(e.target.value)}
+                />
+              </div>
+
+              <div className="flex mb-4">
+                <div className="w-1/2 mr-2">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Number of Copies
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:border-[#F56630]"
+                    type="number"
+                    placeholder="Enter number of copies"
+                    value={numberOfCopies}
+                    onChange={(e) => setNumberOfCopies(e.target.value)}
+                  />
                 </div>
-                {/* body */}
-                <div className="relative p-4 flex-auto">
-                  <div className="mb-4">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="book-name">
-                      Book Name
-                    </label>
-                    <input
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      id="book-name"
-                      type="text"
-                      placeholder="Enter book name"
-                    />
-                  </div>
-                  {/* Repeat the above div for each field as per the design */}
-                </div>
-                {/* footer */}
-                <div className="flex items-center justify-end p-2 border-blueGray-200 rounded-b">
-                  <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => setBookInfoModal(false)}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className="text-green-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                    type="button"
-                    onClick={() => {/* Add book logic here */}}
-                  >
-                    Add Book
-                  </button>
+                <div className="w-1/2 ml-2">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">
+                    Shelf Number
+                  </label>
+                  <input
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:border-[#F56630]"
+                    type="text"
+                    placeholder="Enter shelf number"
+                    value={shelfNumber}
+                    onChange={(e) => setShelfNumber(e.target.value)}
+                  />
                 </div>
               </div>
-            </div>
+
+              <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2">
+                  Wing
+                </label>
+                <input
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 focus:outline-none focus:border-[#F56630]"
+                  type="text"
+                  placeholder="Enter Wing the Book is In"
+                  value={wing}
+                  onChange={(e) => setWingLocation(e.target.value)}
+                />
+              </div>
+
+              <div className="flex items-center justify-center">
+                <button
+                  className="bg-transparent border border-solid border-[#cc5833] text-[#cc5833] hover:text-[#ffd] hover:bg-[#cc5833] mx-5 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  type="button"
+                  onClick={() => toggleAddBookModal(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="bg-transparent border border-solid border-[#458246] text-[#458246] hover:text-[#ffd] hover:bg-[#458246] mx-5 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  type="submit"
+                >
+                  Add Book
+                </button>
+              </div>
+            </form>
           </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
         </>
       ) : null}
     </>
-  }
+  );
 
   const modalComponent = () => (
     <>
@@ -314,7 +319,7 @@ function ManageBooksPage() {
       .then((res) => res.json())
       .then((fetchedRowData) => setRowData(fetchedRowData));
   }, []);
-  
+
   const gridOptions = {
     suppressCellFocus: true,
     pagination: true,
@@ -336,55 +341,58 @@ function ManageBooksPage() {
     console.log('Selection Changed', selectedDataIDs);
   };
 
-  const handleCheckIn = (rowIds : any) => {
-    if(rowIds.length <= 0) hideModal();
-    console.log(rowIds)
-    console.log('checking in ' + rowIds.toString())
+  const handleCheckIn = (rowIds: any) => {
+    if (rowIds.length <= 0) hideModal();
+    console.log(rowIds);
+    console.log('checking in ' + rowIds.toString());
     // add logic to update the state and the db.
-    
-    // change the state and decrement numcopies by 1
-    
-  }
 
-  const handleDelete = (rowIds : any) => {
-    if(rowIds.length <= 0) hideModal();
-    console.log(rowIds)
-    console.log('checking in ' + rowIds.toString())
-    // add logic to update the state and the db.
-    
     // change the state and decrement numcopies by 1
-    
-  }
+  };
+
+  const handleDelete = (rowIds: any) => {
+    if (rowIds.length <= 0) hideModal();
+    console.log(rowIds);
+    console.log('checking in ' + rowIds.toString());
+    // add logic to update the state and the db.
+
+    // change the state and decrement numcopies by 1
+  };
 
   return (
     <div className="h-screen flex">
-      {/** Modal component */}
+      
       {modalComponent()}
+      
+      {BookModalComponent()}
       <div
-          className={`w-1/5 transition-all duration-300 ease-in-out overflow-hidden ${
-            showSidebar ? 'block translate-x-0 ' : 'hidden translate-x-full'
+        className={`w-1/5 transition-all duration-300 ease-in-out overflow-hidden ${
+          showSidebar ? 'block translate-x-0 ' : 'hidden translate-x-full'
+        }`}
+      >
+        {/** create a side bar  */}
+        <Sidebar show={showSidebar} setter={setShowSidebar} />
+      </div>
+
+      {/* Main Content */}
+      <div className="w-full relative transition-margin">
+        {/** create a nav bar */}
+        <nav
+          className={`z-50 shadow-md fixed w-full transition-margin ${
+            showSidebar ? 'ml-1/5' : 'ml-0'
           }`}
         >
-          {/** create a side bar  */}
-          <Sidebar show={showSidebar} setter={setShowSidebar} />
-        </div>
-
-        {/* Main Content */}
-      <div className="w-full relative transition-margin">
-        
-        {/** create a nav bar */}
-        <nav className={`z-50 shadow-md fixed w-full transition-margin ${showSidebar ? 'ml-1/5' : 'ml-0'}`}>
           <div className="p-0.5 bg-primary"></div>
 
           <div className="p-3 flex ">
-          <div
-            className="HAMBURGER-ICON space-y-2 p-2"
-            onClick={handleToggle}
-          >
-            <span className="block h-0.5 w-8 animate-pulse bg-primary"></span>
-            <span className="block h-0.5 w-8 animate-pulse bg-primary"></span>
-            <span className="block h-0.5 w-8 animate-pulse bg-primary"></span>
-          </div>
+            <div
+              className="HAMBURGER-ICON space-y-2 p-2"
+              onClick={handleToggle}
+            >
+              <span className="block h-0.5 w-8 animate-pulse bg-primary"></span>
+              <span className="block h-0.5 w-8 animate-pulse bg-primary"></span>
+              <span className="block h-0.5 w-8 animate-pulse bg-primary"></span>
+            </div>
 
             <div className="text-2xl text-primary font-bold p-2">
               Divine Manuscripts
@@ -397,8 +405,6 @@ function ManageBooksPage() {
             </div>
           </div>
         </nav>
-
-        
 
         <div className="mt-24 w-4/5 mx-auto">
           <div className="flex justify-between">
@@ -416,7 +422,7 @@ function ManageBooksPage() {
               <button
                 className="mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold text-sm px-2 py-1.5 rounded outline-none ease-linear transition-all duration-150"
                 type="button"
-                onClick={()=>showModal(true, selectedRowIds.length)}
+                onClick={() => showModal(true, selectedRowIds.length)}
               >
                 <i className="fas fa-heart"></i> Checkout selection
               </button>
@@ -446,8 +452,8 @@ function ManageBooksPage() {
             <button
               className="mr-2 ml-2 text-[#5ba151] border border-solid border-[#458246] hover:bg-[#458246]-500 hover:text-[#ffd] hover:bg-[#5ba151] shadow hover:shadow-lg focus:outline-1 hover:outline hover:outline-dashed active:bg-[#458246]-600 font-bold text-sm px-2 py-1.5 camelCase rounded outline-none ease-linear transition-all duration-150"
               type="button"
-              onClick={()=>{
-                setBookInfoModal(true)
+              onClick={() => {
+                toggleAddBookModal(true);
               }}
             >
               <i className="fas fa-heart"></i> Add new book
@@ -456,11 +462,15 @@ function ManageBooksPage() {
             <button
               className="text-[#cc5833] bg-transparent border border-solid border-[#cc5833] hover:bg-[#cc5833] hover:text-[#ffd] active:bg-pink-600 font-bold uppercase text-sm px-2 py-1.5 rounded outline-none focus:outline-none ease-linear transition-all duration-150"
               type="button"
-              onClick={()=>{
-                showModal(true, 
-                  selectedRowIds.length,
-                  {...modalProperties, titleText : "Delete Books", dialogueText : "Are you sure you want to delete all copies of these ", okButton : "Confirm Delete", handleOk : handleDelete}
-                  )
+              onClick={() => {
+                showModal(true, selectedRowIds.length, {
+                  ...modalProperties,
+                  titleText: 'Delete Books',
+                  dialogueText:
+                    'Are you sure you want to delete all copies of these ',
+                  okButton: 'Confirm Delete',
+                  handleOk: handleDelete,
+                });
               }}
             >
               Delete selection
