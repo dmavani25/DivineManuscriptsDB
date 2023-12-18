@@ -179,7 +179,7 @@ export async function POST(req: NextRequest) {
          ); 
 
          if (rows.rowCount === 0) {
-            return new Response("POST request received but book already exists", { status: 200 });
+            throw new Error("Book already exists");
          }
          else {
             return new Response(`POST request received and book (${book.bookname}, ${book.authorname}) inserted`, { status: 201 }
