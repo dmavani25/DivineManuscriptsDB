@@ -62,7 +62,6 @@ export async function PUT(req: NextRequest) {
     const checkedoutcopies = bookBody?.['checkedoutcopies'] || '0';
 
 
-    console.log(bookBody);
 
     const book: book = {
         bookname: bookname,
@@ -159,7 +158,6 @@ export async function POST(req: NextRequest) {
         throw new Error("Authorname is empty");
     }
 
-    console.log(bookBody);
 
     const book: book = {
         bookname: bookname,
@@ -190,6 +188,7 @@ export async function POST(req: NextRequest) {
         ]
          ); 
 
+
          if (rows.rowCount === 0) {
             throw new Error("Book already exists");
          }
@@ -202,7 +201,6 @@ export async function POST(req: NextRequest) {
 
     } catch (error) {
         const message = (error as Error).message;
-        console.log(message);
         return new Response(message, { status: 500 });
     } finally {
         client.release();

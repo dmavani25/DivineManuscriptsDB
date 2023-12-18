@@ -159,15 +159,20 @@ function ManageBooksPage() {
             body: JSON.stringify(data)
         });
 
-        return response.json();
+        const res = await response.json();
+        console.log(JSON.stringify(res));
+
+
+        return res;
         
     } catch (error) {
-      console.log(error);
+      // console.log(error);
         return null;
     }
   }
 
   const handleAddBook = (e: any) => {
+    setAddBookError('');
     e.preventDefault();
     const book: book = {
       bookname: bookName,
@@ -179,17 +184,12 @@ function ManageBooksPage() {
 
     console.log(book);
     postBook('../api/book', book).then(
-      res => {
-        if(res.code == 200){
-          setAddBookSuccess("Book Successfully Added");
-          toggleAddBookModal(false);
-        }else{
-          setAddBookError(res.message);
-        }
-
+      (res) => {
+        setAddBookSuccess("Book Successfully Added");
+        toggleAddBookModal(false);
       }
     ).catch((err) => {
-      console.log(err);
+      // console.log(err);
       setAddBookError("Something went wrong");
     })
 
