@@ -149,6 +149,8 @@ export async function POST(req: NextRequest) {
         throw new Error("Authorname is empty");
     }
 
+    console.log(bookBody);
+
     const book: book = {
         bookname: bookname,
         authorname: authorname,
@@ -182,7 +184,7 @@ export async function POST(req: NextRequest) {
             throw new Error("Book already exists");
          }
          else {
-            return new Response(`POST request received and book (${book.bookname}, ${book.authorname}) inserted`, { status: 201 }
+            return new Response(`POST request received and book (${book.bookname}, ${book.authorname}) inserted`, { status: 200 }
 
             );
          }
@@ -190,6 +192,7 @@ export async function POST(req: NextRequest) {
 
     } catch (error) {
         const message = (error as Error).message;
+        console.log(message);
         return new Response(message, { status: 500 });
     } finally {
         client.release();

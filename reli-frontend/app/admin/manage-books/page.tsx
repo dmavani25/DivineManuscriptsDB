@@ -7,6 +7,7 @@ import Navbar from 'app/nav-bar/Navbar';
 import { useRef, useCallback, useState, useEffect } from 'react';
 import Sidebar from 'app/custom-components/side-bar/admin/Sidebar';
 import { book } from 'db/db-types';
+import { url } from 'inspector';
 
 function ManageBooksPage() {
   const gridRef = useRef<any>(null);
@@ -95,6 +96,7 @@ function ManageBooksPage() {
   } as ModalPropsDef);
   const [showBookModal, toggleAddBookModal] = useState(false);
   const [addBookError, setAddBookError] = useState('');
+  const [addBookSuccess, setAddBookSuccess] = useState('')
 
   const modalProperties: ModalPropsDef = {
     showModal: false,
@@ -146,6 +148,25 @@ function ManageBooksPage() {
   const [wing, setWingLocation] = useState('');
   const [numberOfCopies, setNumberOfCopies] = useState('');
 
+  async function postBook(url = '../api/book', data : book) {
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        return response.json();
+        
+    } catch (error) {
+      console.log(error);
+        return null;
+    }
+  }
+
   const handleAddBook = (e: any) => {
     e.preventDefault();
     const book: book = {
@@ -157,6 +178,20 @@ function ManageBooksPage() {
     };
 
     console.log(book);
+    postBook('../api/book', book).then(
+      res => {
+        if(res.code == 200){
+          setAddBookSuccess("Book Successfully Added");
+          toggleAddBookModal(false);
+        }else{
+          setAddBookError(res.message);
+        }
+
+      }
+    ).catch((err) => {
+      console.log(err);
+      setAddBookError("Something went wrong");
+    })
 
     // toggle add book Props
   };
@@ -174,6 +209,7 @@ function ManageBooksPage() {
 
               {/* Display error message if there is one */}
               {addBookError && <div className="text-[#ff3333] text-center">{addBookError}</div>}
+              {addBookSuccess && <div className="text-[#458246] text-center">{addBookSuccess}</div>}
 
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">
