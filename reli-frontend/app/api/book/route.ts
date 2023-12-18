@@ -132,21 +132,21 @@ export async function DELETE(req: NextRequest){
 
 export async function POST(req: NextRequest) {
 
-    const searchParams = req.nextUrl.searchParams
+    const bookBody = await req.json();
 
-    const bookname = searchParams.get('bookname') || '';
-    const authorname = searchParams.get('authorname') || '';
-    const religion = searchParams.get('religion') || '';
-    const shelf = searchParams.get('shelf') || '';
-    const wing = searchParams.get('wing') || '';
-    const numcopies = searchParams.get('numcopies') || '1';
-    const checkedoutcopies = searchParams.get('checkedoutcopies') || '0';
+    const bookname = bookBody?.['bookname'] || '';
+    const authorname = bookBody?.['authorname'] || '';
+    const religion = bookBody?.['religion'] || '';
+    const shelf = bookBody?.['shelf'] || '';
+    const wing = bookBody?.['wing'] || '';
+    const numcopies = bookBody?.['numcopies'] || '1';
+    const checkedoutcopies = bookBody?.['checkedoutcopies'] || '0';
 
     if (bookname === '') {
-        return new Response("POST request received but bookname is empty", { status: 200 });
+        throw new Error("Bookname is empty");
     }
     if (authorname === '') {
-        return new Response("POST request received but authorname is empty", { status: 200 });
+        throw new Error("Authorname is empty");
     }
 
     const book: book = {
