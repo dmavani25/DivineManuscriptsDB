@@ -235,9 +235,7 @@ function ManageBooksPage() {
     postBook('../api/book', 'DELETE', books).then(
       (res) => {
         hideModal();
-        router.refresh();
-
-        
+        location.reload();
       }
     ).catch((err) => {
       const errModalProperties: ModalPropsDef = {

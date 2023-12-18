@@ -122,21 +122,14 @@ export async function DELETE(req: NextRequest){
 
     let valuesString = booksAndAuthors
       .map(({ bookName, authorName }: any) => {
-        return `(${bookName}, ${authorName})`;
+        return `('${bookName}', '${authorName}')`;
       })
       .join(',');
 
-      console.log(valuesString);
-
-    let valuesArray = [].concat(
-      ...booksAndAuthors.map(({ bookName, authorName }: any) => {
-        return [bookName, authorName];
-      })
-    );
 
     const queryText = ` DELETE FROM public.book AS books
-        USING VALUES ${valuesString} AS v(book_name, author_name)
-        WHERE books.bookname = v.book_name AND books.authorname = v.author_name`;
+    USING (VALUES ${valuesString}) AS v(book_name, author_name)
+    WHERE books.bookname = v.book_name AND books.authorname = v.author_name`;
     
     const client = await getClient();
 
